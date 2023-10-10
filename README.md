@@ -1,2 +1,6 @@
-# cpsc464final
-CPSC 464 final project
+# CPSC 464 final project
+
+``
+doc/ documentation and latex
+src/ source code files
+``
