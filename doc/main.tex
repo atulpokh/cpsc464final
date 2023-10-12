@@ -263,10 +263,37 @@ Discuss the importance of the results, state the limitations, and point out aven
 .do files prepare the data, and the .m files run the simulations.
 \subsection{Data used}
 \subsubsection{ACS-extract.do}
-Input: ../data/ACS/usa\_00003.dat/usa\_003.dat \\
-Output: ../ACS\_2006\_2017.dta \\
+Input: data/ACS/usa\_00003.dat/usa\_003.dat \\
+Output: data/ACS\_2006\_2017.dta \\
 Guess: This looks like American Community Survey (ACS) data from 2006 to 2017. \\
 Source: 
+
+\subsection{descriptives-CHA.do}
+Input: data/Matlab/eligible\_population\_CHA.dta \\
+Output:  results/Descriptive/ \\
+- acs\_descriptive\_CHA.dta \\
+- descriptive\_table\_auto.xls  (with sheets “ACS All”, “ACS by Type” )\\
+		- acs\_descriptive\_CHA\_bytype.dta\\
+		- pic\_descriptive\_CHA.dta\\
+		- descriptive\_table\_auto.xls ( with sheet "PIC All" and "PIC by Type" )\\
+		- pic\_counts\_CHA\_bytype.dta\\
+
+\subsection{eligible-population.do}
+Input: data/ACS\_2006\_2017.dta\\
+Output: data/Matlab/ \\
+- eligible\_population\_CHA.dta\\
+- eligible\_population\_CHA.txt (A pipe delimited file)
+
+\subsection{pic-data.do}
+Input: data/HUD-PIC/2012/PROJECT\_2012.csv \\
+Output: \\
+data/ \\
+- HUD-PIC/2012/PIC-CHA.dta \\
+- Matlab/projects-ready.dta \\
+- Matlab/projects-ready.txt \\
+results/descriptive/ \\
+-   pic\_by\_development.dta \\
+- development\_characteristics.xls ( with sheet("raw") ) \\
 
 
 \bibliographystyle{plain}
