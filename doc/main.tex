@@ -213,11 +213,22 @@ Write down a bullet list of desired contributions that emphasize:
 \section{Preliminaries / Problem statement} 
 This should contain all the required mathematical notation and background necessary for anything to come after.
 
+
 \section{The model/framework}
-
-
-
-
+\noindent
+Our city of choice to model policy changes is Baltimore. With a population of close to 600,000 and a public housing system containing approximately 6,000 properties, Baltimore's robust and widely used public housing system is an ideal choice for analyzing the impacts of differing priority systems on allocation outcomes. \\
+\newline
+Demand for public housing in Baltimore is also exceedingly high. The public housing system lottery opened for the first time since 2019 this August, with nearly 30,000 applicants applying during the two week window. (source: https://www.wypr.org/wypr-news/2023-08-14/28-000-apply-for-baltimore-city-housing-wait-list-two-week-window-ends-tonight). Priority systems are unfortunately essential to best allocate the limited available housing to those most in need. \\
+\newline
+Baltimore is also an ideal choice due to the availability of relevant datasets, discussed further in 6.1. \\
+\newline 
+Our model includes multiple components due to the complexity of applicant selection that takes place in public housing allocation. Broadly, the framework is as follows:
+\begin{enumerate}
+    \item Estimate who is eligible for Baltimore public housing, and of the eligible pool, who applies.
+    \item Estimate the existing allocation system.
+    \item Implement changes in housing priority systems and model the effects when compared to actual waitlist demographics.
+\end{enumerate}
+Modeling the waitlist and how it changes under new policies also requires us to consider the human factors that impact waitlist membership. In particular, we will make assumptions about the rate at which applicants apply, any applicants that leave the waitlist, and the rate at which appartments become available for new occupants. 
 
 
 \section{(Desired) Theoretical results}
@@ -230,6 +241,11 @@ This should contain all the required mathematical notation and background necess
 
 \subsection{Setup}
 \paragraph{Datasets.}
+Our work will employ three datasets. The first is the \textit{American Community Survey (ACS) microdata} (source: https://data.census.gov/mdat/\#/search?ds=ACSPUMS5Y2021). The ACS is an annual survey conducted with the aim of being a nationally representative sample of demographic, economic, and housing information. We will employ demographic variables contained in the ACS data to estimate the number of households elligible for public housing. \\
+\newline
+Our second dataset is the \textit{HUD’s Picture of Subsidized Households (PIC) data} (source: https://www.huduser.gov/portal/datasets/assthsg.html). The PIC data contains information on demographics of public housing tenants, public housing vacancy rates, and average waiting times that will be helpful in constructing our model. \\
+\newline
+Finally, we will make use of the \textit{2020 Baltimore public housing waiting list demographics} (source: https://www.hud.gov/sites/dfiles/PIH/documents/BaltimoreFY20Report.pdf). This information will allow us to validate our model of the existing allocation system.
 
 \paragraph{Algorithms.}
 
@@ -242,7 +258,15 @@ This should contain all the required mathematical notation and background necess
 
 \section{Conclusion, limitations, and future Work}
 Discuss the importance of the results, state the limitations, and point out avenues of future work/open problems.
-
+\newpage
+\section{Notes}
+.do files prepare the data, and the .m files run the simulations.
+\subsection{Data used}
+\subsubsection{ACS-extract.do}
+Input: ../data/ACS/usa\_00003.dat/usa\_003.dat \\
+Output: ../ACS\_2006\_2017.dta \\
+Guess: This looks like American Community Survey (ACS) data from 2006 to 2017. \\
+Source: 
 
 
 \bibliographystyle{plain}
