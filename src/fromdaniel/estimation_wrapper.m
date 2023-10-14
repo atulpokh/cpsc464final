@@ -28,7 +28,7 @@ model_name='';
     dev_data.pct_ami = dev_data.pct_median/100;
     
     % eligible data
-    hh_data = readtable([inputs 'eligible_' pha '.txt'],...
+    hh_data = readtable([inputs 'eligible_population_' pha '.txt'],...
                     'delimiter','|','ReadVariableNames',true);
     hh_data.income = hh_data.income/10000;
     hh_data.pct_ami = hh_data.pct_ami/100;
