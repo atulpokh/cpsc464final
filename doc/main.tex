@@ -190,6 +190,8 @@ Explain in detail the most related (around 3) prior works. For each,
 \end{enumerate}
 
 
+
+
 \paragraph{Desired contributions.}
 Write down a bullet list of desired contributions that emphasize:
 
@@ -210,11 +212,21 @@ Write down a bullet list of desired contributions that emphasize:
 
 \section{Other related works}
 
-\section{Preliminaries / Problem statement} 
-This should contain all the required mathematical notation and background necessary for anything to come after.
+The allocation of scarce resources is a classic problem that pervades social service delivery. At the highest level, prior research has examined the necessity of trade-offs for fairness in social contexts \cite{mashiat2022trade}, arguing that often times many reasonable definitions of equity cannot hold simultaneously. This paper in particular creates a metric of fairness to analyze average realized utility of a resulting outcome, but does not give way to implement allocation systems, which we wish to examine. \\
+
+\newline
+There are a variety of studies regarding affordable housing and approximating allocation algorithms. The major limitation of all these studies is that the algorithms are not public. However, Figure 1 describes the general stages of any scheme.\\
+\newline
+Some papers have abstracted the problem of housing allocation into that of designing waitlists and lotteries \cite{arnosti2020design}. They claim that two approaches of housing allocation create near-optimal matches: independent lotteries and waitlists. They examine in great detail these two modes of allocation, but does not examine the inherent factor of consumer choice in the housing allocation process. Another paper addresses this shortfall by implementing a modified version of the latter of these systems on housing data from Pittsburgh \cite{harvardpublichousing}. Specifically addressing the issue of allocation inefficiency, they argue that implementing an independent waitlist per building reduces the amount of vacant buildings emptied during turnover. However, this algorithm does not account for the nuances of household differences (size, number of children/elderly, veteran status...), which is what we intend to explore. \\
+
+\newline
+
+In our project, we aim to analyze the demographic effects of tenant populations by changing the order of allocations, as in \cite{nyuaffordablehousing}. This paper tackles the issue that housing allocation methods are often unknown and opaque. Thus, they created an algorithm to include priority systems (moving populations with certain characteristics to the front of a queue). Specifically, they analyzed the changes in tenant composition by prioritizing high income households, low income households, the elderly population, and families with children under 18. While the model does shed light on the magnitude of change in these particular orderings, it limits the eligible applicants to those whose household income is above 80\% of the area median income, which severely skews the results. There are also many other key variables such as families with victims of domestic violence, military status, and veteran status that were not explored.\\
 
 
-\section{The model/framework}
+
+
+\section{The Model/Framework}
 \noindent
 Our city of choice to model policy changes is Baltimore. With a population of close to 600,000 and a public housing system containing approximately 6,000 properties, Baltimore's robust and widely used public housing system is an ideal choice for analyzing the impacts of differing priority systems on allocation outcomes. \\
 \newline
@@ -226,10 +238,22 @@ Our model includes multiple components due to the complexity of applicant select
 \begin{enumerate}
     \item Estimate who is eligible for Baltimore public housing, and of the eligible pool, who applies.
     \item Estimate the existing allocation system.
-    \item Implement changes in housing priority systems and model the effects when compared to actual waitlist demographics.
+    \item Implement changes in housing priority systems and model the effects when compared to actual waitlist demographics. 
 \end{enumerate}
-Modeling the waitlist and how it changes under new policies also requires us to consider the human factors that impact waitlist membership. In particular, we will make assumptions about the rate at which applicants apply, any applicants that leave the waitlist, and the rate at which appartments become available for new occupants. 
-
+Modeling the waitlist and how it changes under new policies also requires us to consider the human factors that impact waitlist membership. In particular, we will make assumptions about the rate at which applicants apply, any applicants that leave the waitlist, and the rate at which apartments become available for new occupants.
+\subsection{Various Housing Allocation Algorithms}
+As forementioned in our prior related works section, we know very little about the methods jurisdictions use to allocate assistance. One such paper attempts to approximate the different algorithms of housing allocation systems deployed in different cities. The steps are detailed below:
+\begin{enumerate}
+    \item Housholds successfully complete the application for housing assistance. Many eligible housholds don't apply for assitance due to lack of functioning abilities, language skills, or other tools needed to complete the application.
+    \item Applications are deemed eligible or non-eligible (i.e. some cities only allow those with income greater than 80\% of average median income to apply)
+    \item Categorize the various characteristics for each household applicant (unit size, military status, number of children, income level, etc.)
+    \item Match type of housing (1-bedroom, 2-bedroom, etc.) with each household applicant based on their characteristics in step 3
+    \item The order in which applicants will receive allocations for each housing type is determined (i.e. lottery, queue, waiting list, some metric of ``need", or a combination)
+    \item Present chosen applicants with at least one housing option. In some cases, applicants apply only for a particular housing development in some location, so they must take the option or leave the queue (or allocation system) all together. Other systems allow applicants to reject the particular unit or development, but stay in the queue for other, more desirable, units that become available.
+\end{enumerate}
+\subsection{Cambridge Housing Model}
+\label{sec:chm}
+In the same paper, the author attempts to examine the specific housing system of one Public Housing Agency: the Cambridge, MA Public Housing Agency (CHA) at a specific point in time (2012 calendar year) \cite{nyuaffordablehousing}. First, the paper approximates the allocation algorithm.
 
 \section{(Desired) Theoretical results}
 
@@ -247,9 +271,11 @@ Our second dataset is the \textit{HUD’s Picture of Subsidized Households (PIC)
 \newline
 Finally, we will make use of the \textit{2020 Baltimore public housing waiting list demographics} (source: https://www.hud.gov/sites/dfiles/PIH/documents/BaltimoreFY20Report.pdf). This information will allow us to validate our model of the existing allocation system.
 
-\paragraph{Algorithms.}
+\paragraph{Algorithms}
 
-\paragraph{Baselines and metrics.}
+Using the Cambridge housing allocation model in section~\ref{sec:chm}, we will simulate the waitlist most likely in C. Each simulation 
+
+\paragraph{Baselines and metrics}
 
 
 
@@ -259,11 +285,11 @@ Finally, we will make use of the \textit{2020 Baltimore public housing waiting l
 \section{Conclusion, limitations, and future Work}
 Discuss the importance of the results, state the limitations, and point out avenues of future work/open problems.
 \newpage
-\section{Notes}
-.do files prepare the data, and the .m files run the simulations.
-\subsection{Data used}
-\subsubsection{ACS-extract.do}
-Input: data/ACS/usa\_00003.dat/usa\_003.dat \\
+\section{Data Prep Scripts}
+.do files prepare the data. Filenames in bold are not generated by the scripts. They have to be available to them instead. Each of the scripts is described below.
+
+\subsection{ACS-extract.do}
+Input: \textbf{data/ACS/usa\_00003.dat/usa\_003.dat} \\
 Output: data/ACS\_2006\_2017.dta \\
 Guess: This looks like American Community Survey (ACS) data from 2006 to 2017. \\
 Source: 
@@ -279,25 +305,50 @@ Output:  results/Descriptive/ \\
 		- pic\_counts\_CHA\_bytype.dta\\
 
 \subsection{eligible-population.do}
-Input: data/ACS\_2006\_2017.dta\\
+Input: data/\\
+ACS/ACS\_2006\_2017.dta\\
+\textbf{other/ami.dta}\\
 Output: data/Matlab/ \\
 - eligible\_population\_CHA.dta\\
 - eligible\_population\_CHA.txt (A pipe delimited file)
 
 \subsection{pic-data.do}
-Input: data/HUD-PIC/2012/PROJECT\_2012.csv \\
+Input: data/ \\
+\textbf{HUD-PIC/2012/PROJECT\_2012.csv} \\
+\textbf{other/CHA-projects.csv} \\
 Output: \\
 data/ \\
 - HUD-PIC/2012/PIC-CHA.dta \\
 - Matlab/projects-ready.dta \\
 - Matlab/projects-ready.txt \\
+- other/waiting-times-CHA.dta\\
 results/descriptive/ \\
 -   pic\_by\_development.dta \\
 - development\_characteristics.xls ( with sheet("raw") ) \\
 
+\section{Primary Datasets}
+The data processing pipeline is shown in Figure~\ref{fig:datapipeline}. The primary files are underlined in red  and described below. See the associated  spreadsheet for the fields and below for any additional notes.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{doc/data_processing_pipeline.png}
+    \caption{Data processing pipeline. Primary data is underlined, and scripts are in purple boxes. Arrows denote input or output.}
+    \label{fig:datapipeline}
+\end{figure}
+
+
+\subsection{usa\_003.dat}
+
+\subsection{ami.dta}
+
+\subsection{PROJECT\_2012.csv}
+
+\subsection{CHA-projects.csv}
+
+\section{Analysis Scripts}
+.m files primarily run simulations and analysis on the data. 
 \bibliographystyle{plain}
-\bibliography{} 
+\bibliography{doc/references} 
 
 
 \end{document}
