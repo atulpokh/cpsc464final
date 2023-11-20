@@ -1,0 +1,35 @@
+.mode csv
+DROP TABLE IF EXISTS hh;
+CREATE TABLE hh(
+hhid INTEGER NOT NULL UNIQUE,
+familysize INTEGER NOT NULL,
+income INTEGER NOT NULL,
+race INTEGER NOT NULL,
+ethnicity INTEGER NOT NULL,
+u18 INTEGER NOT NULL,
+o65 INTEGER NOT NULL,
+vet INTEGER NOT NULL,
+disability INTEGER NOT NULL,
+waittime INTEGER NOT NULL,
+choice INTEGER NOT NULL,
+whenjoined INTEGER NOT NULL,
+whenleft INTEGER NOT NULL,
+pref1 INTEGER NOT NULL,
+pref2 INTEGER NOT NULL,
+pref3 INTEGER NOT NULL,
+pref4 INTEGER NOT NULL,
+huid INTEGER NOT NULL
+);
+
+.import hh_nohead.csv hh
+
+DROP TABLE IF EXISTS hu;
+CREATE TABLE hu(
+huid INTEGER NOT NULL UNIQUE,
+capacity INTEGER NOT NULL,
+vacant INTEGER NOT NULL,
+development INTEGER NOT NULL
+);
+
+.import hu_nohead.csv hu
+.tables
