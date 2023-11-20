@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{float}
+
+\begin{document}
+
+\begin{algorithm}
+\caption{Preference Creation}
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+\Input{Family Size $family\_size$}
+\Output{Preference list $output$}
+\eIf{$family\_size = 1$}{
+    $preferences \leftarrow [2,3]$\;
+}{
+    \eIf{$family\_size = 2$}{
+        $preferences \leftarrow [1,3,4]$\;
+    }{
+        \eIf{$family\_size = 3$}{
+            $preferences \leftarrow [1,2,4]$\;
+        }{
+            \eIf{$family\_size = 4$}{
+                $preferences \leftarrow [2,3,5]$\;
+            }{
+                \eIf{$family\_size = 5$}{
+                    $preferences \leftarrow [4,6]$\;
+                }{
+                    $preferences \leftarrow [5]$\;
+                }
+            }
+        }
+    }
+}
+$output \leftarrow [\min(family\_size, 6)] + \text{{random.sample}}(preferences, \text{{len}}(preferences))$\;
+\Return{$output$}\;
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Housing Vacancy}
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+\Input{Housing stock $stock$}
+\Output{Updated housing stock $stock$}
+$weights \leftarrow [1 / \text{{key}} \text{{ for key in stock}}]$ (higher probabiltiy of smaller houses vacating)\;
+$units\_to\_add \leftarrow 80$\;
+\While{$units\_to\_add > 0$}{
+    $random\_type \leftarrow \text{{random.choice}}(\text{{list}}(stock.\text{{keys}}()))$\;
+    $add\_count \leftarrow \text{{random.randint}}(1, units\_to\_add)$\;
+    $stock[random\_type] += add\_count$\;
+    $units\_to\_add -= add\_count$\;
+}
+\Return{$stock$}\;
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Main Algorithm}
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+\Input{Dataframe $df$, Housing units $housing\_units$, Priorities $priorities$}
+\Output{New Dataframme $df$ with rankings}
+\ForEach{$priority$ \textbf{in} $priorities$}{
+    $df \leftarrow$ original dataframe\;
+    \eIf{$priority = income$}{
+        $waitlist \leftarrow$ sort from low to high income
+    }{
+        $waitlist \leftarrow$ sort from high to low (number of children, elderly)
+    }
+    $period \leftarrow 1e6$\;
+    \For{$\_$ \textbf{in} \text{{range}}(\text{{int}}($period$))}{
+        \If{$\text{{waitlist.shape}}[0] = 0$ (waitlist is empty)}{
+            \text{{break}}\;
+        }
+        $housing\_units \leftarrow \text{{housing\_vacancy}}(housing\_units)$\;
+        \ForEach{$\_, \text{{applicant}}$ \textbf{in} $waitlist.\text{{iterrows}}()$}{
+            $serial\_no \leftarrow$ Applicant's serial number\;
+            \ForEach{$\text{{rank}}$ \textbf{in} $applicant[preferences]$}{
+                \If{$housing\_units[\text{{rank}}] > 0$}{
+                    Match applicant to that rank\;
+                    Save match to $df[ranking]$\;
+                Update $housing\_units[\text{{rank}}] - 1$\;
+                Remove $applicant$ from $waitlist$
+                }
+            }
+        }
+        for $ranking = 0$ applicants, increase $waittime + 1$;
+    }
+    Save statistics and dataframe \;
+}
+\end{algorithm}
+
+\end{document}
