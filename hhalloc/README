@@ -1,0 +1,15 @@
+This contains the matching algorithm for households to housing units
+
+.csv files are data files
+import_data.sh imports the csv files into the hhalloc.sqlite database
+sqlite* file are sqlite test and library files
+
+
+requires sqlite and gsl to be installed
+on a mac, use: 
+
+brew install gsl 
+brew install sqlite
+
+
+
