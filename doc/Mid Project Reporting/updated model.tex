@@ -1,0 +1,347 @@
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsfonts} 
+\usepackage{epsfig} \usepackage{latexsym,nicefrac,bbm}
+\usepackage{xspace}
+\usepackage{color,fancybox,graphicx,subfigure,fullpage}
+\usepackage[top=1.25in, bottom=1.25in, left=1in, right=1in]{geometry}
+\usepackage{tabularx} \usepackage{hyperref} 
+\usepackage{pdfsync}
+\usepackage[boxruled]{algorithm2e}
+\usepackage{multicol}
+\usepackage{enumitem}
+\newcommand{\parag}[1]{ {\bf \noindent #1}}
+\newcommand{\defeq}{\stackrel{\textup{def}}{=}}
+\newcommand{\nfrac}{\nicefrac}
+\newcommand{\opt}{\mathrm{opt}}
+\newcommand{\tO}{\widetilde{O}}
+\newcommand{\polylog}{\mathop{\mbox{polylog}}}
+\newcommand{\supp}{\mathrm{supp}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\ptot}{p_{\mathrm{tot}}}
+\newcommand{\pmin}{p_{\mathrm{min}}}https://www.overleaf.com/project/6525649559e5cf2372c4faa5
+\newcommand{\pmax}{p_{\mathrm{max}}}
+\newcommand{\prob}[1]{\mathrm{Pr}\insquare{#1}}
+
+
+\newcommand{\conv}{\mathrm{conv}}
+\newcommand{\dist}{\mathrm{dist}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\sgn}{\mathrm{sgn}}
+\newcommand{\fc}{\mathrm{fc}}
+
+
+\newcommand{\cM}{\mathcal{M}}https://www.overleaf.com/project/6525649559e5cf2372c4faa5
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\capa}{\mathrm{Cap}}
+\newcommand{\dcapa}{\underline{\mathrm{Cap}}}
+\newcommand{\st}{\mathrm{s.t.}}
+\newcommand{\un}{\mathrm{un}}
+
+\newcommand{\Pb}{\mathbb{P}}
+\newcommand{\sym}{\mathrm{sym}}
+\newcommand{\pcount}{\mathbf{PCount}}
+\newcommand{\mixdet}{\mathbf{MixDisc}}
+\newcommand{\sbold}{\mathbf{S}}
+\newcommand{\mb}{{M(\cB)}}
+
+\newcommand{\mlb}{{M_{\mathrm{lin}}(\cB)}}
+\newcommand{\redc}[1]{ \textcolor{red} {#1}}
+\newcommand{\newt}{\mathrm{Newt}}
+\newcommand{\wtf}{\widetilde{f}}
+\newcommand{\wt}{\widetilde}
+\newcommand{\diam}{\mathrm{diam}}
+\newcommand{\lspan}{\mathrm{span}}
+\newcommand{\interior}{\mathrm{int}}
+\newcommand{\aff}{\mathrm{aff}}
+\newcommand{\per}{\mathrm{per}}
+\newcommand{\bl}{\mathrm{BL}}
+\newcommand{\cE}{\mathbb{E}}
+
+
+\newcommand{\eps}{\varepsilon}
+
+\newenvironment{proof}{\noindent{\bf Proof:}\hspace*{1em}}{\qed\bigskip}
+\clubpenalty=10000
+\widowpenalty = 10000
+\newcommand{\qed}{\hfill\ensuremath{\square}}
+
+
+\def\showauthornotes{0} 
+\def\showkeys{0} 
+\def\showdraftbox{0}
+
+
+\newcommand{\Snote}{\Authornote{S}}
+\newcommand{\Scomment}{\Authorcomment{S}}
+
+\newcommand\Z{\mathbb Z}
+\newcommand\N{\mathbb N}
+\newcommand\R{\mathbb R}
+\newcommand\C{\mathbb C}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{fact}{Fact}[section]
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{claim}[theorem]{Claim}
+
+\newtheorem{openprob}[theorem]{Open Problem}
+\newtheorem{remk}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{apdxlemma}{Lemma}
+%\newtheorem{algorithm}[theorem]{Algorithm}
+\newcommand{\question}[1]{{\sf [#1]\marginpar{?}} }
+
+%% probability stuff
+
+\newcommand\pr{\mathop{\mbox{\bf Pr}}}
+\newcommand\av{\mathop{\mbox{\bf E}}}
+\newcommand\var{\mathop{\mbox{\bf Var}}}
+
+\newcommand{\ex}[1]{\av\left[{#1}\right]}
+\newcommand{\Ex}[2]{\ap_{{#1}}\left[{#2}\right]}
+
+\def\abs#1{\left| #1 \right|}
+\newcommand{\norm}[1]{\ensuremath{\left\lVert #1 \right\rVert}}
+
+
+
+\newcommand{\tr}[1]{\mathop{\mbox{Tr}}\left({#1}\right)}
+\newcommand{\diag}[1]{{\sf Diag}\left({#1}\right)}
+
+\newcommand\set[1]{\left\{#1\right\}} %usage \set{1,2,3,,}
+\newcommand{\poly}{\mathrm{poly}}
+\newcommand{\floor}[1]{\left\lfloor\, {#1}\,\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil\, {#1}\,\right\rceil}
+\newcommand{\comp}[1]{\overline{#1}}
+\newcommand{\pair}[1]{\left\langle{#1}\right\rangle} %for inner product
+\newcommand{\smallpair}[1]{\langle{#1}\rangle}
+
+\newcommand{\inparen}[1]{\left(#1\right)}             %\inparen{x+y}  is (x+y)
+\newcommand{\inbraces}[1]{\left\{#1\right\}}           %\inbrace{x+y}  is {x+y}
+\newcommand{\insquare}[1]{\left[#1\right]}             %\insquare{x+y}  is [x+y]
+\newcommand{\inangle}[1]{\left\langle#1\right\rangle} %\inangle{A}    is <A>
+
+
+\newenvironment{proofsketch}{\begin{trivlist} \item {\bf
+Proof Sketch:~~}}
+  {\qedsketch\end{trivlist}}
+
+\newenvironment{proofof}[1]{\begin{trivlist} \item {\bf Proof
+#1:~~}}
+  {\qed\end{trivlist}}
+
+
+\title{\bf CPSC 464/564: Modeling Alternative Affordable Housing Priority Systems}
+
+
+\author{Andrew West, Nicole Lam, Atul Pokharel, Urszula Solarz \\
+Professor: Nisheeth K. Vishnoi
+}
+
+
+
+
+
+\begin{document}
+
+
+\maketitle
+ 
+\begin{abstract}
+Writing out a detailed model for $N$ individuals and $M$ housing units. 
+\end{abstract}
+\section{Housing Development Attributes}
+Let $M$ be the number of different of housing units. By the Housing Authority of Baltimore City, public housing authorities manage a little over $M = $ 20,000 units. Each housing unit $m$ is associated with two values: a capacity (number of people who can live in the housing unit) and its vacancy status (1 for occupied, 0 for vacant). Furthermore, we introduce another parameter $v$ that which represents the general vacancy rate (i.e. how many families leave their affordable housing units per period). \\
+\newline
+Given this list of $M$ housing units, we also want to determine the number of each unique housing type (in terms of size). Namely, we categorize this list of housing units by their capacity $c$. Let us denote the vector of different types of housing by $\mathcal{M}_u$, where each entry of $\mathcal{M}_u$ represents the number of units for each type of house (number of 1 bedrooms, 2 bedrooms, etc.). \\
+\newline
+From the most recent annual report, we get the following number of units for each capacity:
+\begin{itemize}
+    \item 1 Bedroom: $9820$
+    \item 2 Bedroom: $4349$
+    \item 3 Bedroom: $3107$
+    \item 4 Bedroom: $1788$
+    \item 5 Bedroom: $880$
+    \item 6 Bedroom or More: $569$ 
+\end{itemize}
+For a total of $20513$ units.
+
+\section{Applicant Attributes}
+Let $N$ be the number of applicants to the housing system. Each applicant $1 \leq i \leq N$ has two vectors associated with it: 
+\begin{itemize}
+    \item A characteristic vector of length $k = 8$, which represents the $k$ different characteristics (family size, income, race, ethnicity, number of children, number of elderly members, veteran status, disability). We take these attributes from the 2021 5 year ACS survey, filtering by respondents from Baltimore City.
+    \begin{itemize}
+        \item Family size 
+        \item Income
+        \item Race of head of household - categorized by (1) White Alone, (2) Black or African American alone, (3) American Indian alone, (4) Alaska Native alone, (5) American Indian and Alaska Native tribes specified, (6) Asian alone, (7) Native Hawaiian and Other Pacific Islander alone, (8) Some Other Race alone, (9) Two or More Races
+        \item Ethnicity - (1) Hispanic or Latino, (0) Not Hispanic or Latino
+        \item Number of children under 18
+        \item Number of elderly over 65
+        \item Veteran status of any household members - 1 (True) or 0 (False)
+        \item Disability status of any household members - 1 or 0
+    \end{itemize}
+    Furthermore, in this characteristics table, we add an additional two parameters which we will utilize letter to calculate fairness:
+    \begin{itemize}
+        \item Wait time - number of periods until the applicant is matched with some housing
+        \item Choice number - the ranking of the matched housing unit (i.e. top choice is 1, second choice is 2, ...)
+    \end{itemize}
+    \item A preference vector $\mathcal{P}_i$ of length $|\mathcal{M}_u|$ that ranks each applicants' preference for each type of housing unit. Recall that each type of housing unit has some capacity $c$. Let us denote the family size of applicant $i$ by $s_i$. \\
+    \newline
+    We model preferences using the following assumptions: assume that the top preference for every applicant is the housing unit with capacity $s_i$. The following preferences differ by the family size of the applicant, but never exceed $s_i \pm 2$. Thus, every preference vector $\mathcal{P}_i$ will have an ordering of $p \leq 4$ preferences, and the remaining $|\mathcal{M}_u| - p$ entries will be 0. We approximate the housing unit preferences for each applicant (organized by family size) below:
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|c|c}
+             \text{Family Size} &  Choice 1 & Remaining Choices (in any order)\\
+             \hline
+             1 & 1 bedroom & 2 bedroom \\
+             2 & 2 bedroom & 1, 3, 4 bedroom \\
+             3 & 3 bedroom & 1, 2, 4 bedroom \\
+             4 & 4 bedroom & 2, 3, 5 bedroom \\
+             5 & 5 bedroom & 4, 6+ bedroom \\
+             6+ & 6+ bedroom & 5 bedroom
+        \end{tabular}
+        \caption{Housing Preferences by Family Size}
+        \label{tab:my_label}
+    \end{table}
+\end{itemize} 
+\section{Housing Allocation Algorithm}
+Consider the following $N$ by $M$ matrix. 
+\[H =
+\begin{bmatrix}
+    \mathcal{P}_1 \\
+    \mathcal{P}_2 \\
+    \vdots \\
+    \mathcal{P}_k
+\end{bmatrix}
+=
+\begin{bmatrix}
+    p_{1,1} & p_{1,2} & \cdots & p_{1,M} \\
+    p_{2,1} & \ddots & \quad & p_{2,M} \\
+    \vdots & \quad & \ddots & \vdots \\
+    p_{N,1} & p_{N,2} & \cdots & p_{N,M} 
+\end{bmatrix}\]
+where $p_{i,j}$ represents the preference ranking for applicant $i$ on housing development $j$. \\
+\newline
+We introduce two other parameters:
+\begin{itemize}
+    \item Applicant departure rate $\delta$: at the beginning of each period, we remove $\delta \cdot \texttt{len}(H)$ applicants from the matrix at random. Assume that $\delta$ is constant every period.
+    \item Applicant arrival rate $\alpha$: next, we create $X_\alpha \cdot \texttt{len}(H)$ new applicants to add to matrix $H$, where $X_\alpha \sim Poisson(\alpha)$
+\end{itemize}
+\subsection{Data Set-Up}
+\begin{enumerate}
+    \item We are given $N$ applicants
+    \item Generate a $N \times M$ matrix populated with their preference vectors
+    \item Eliminate ineligible applicants based on median income. Applicants with household income $150\%$ of the poverty line or below are eligible:
+    \item Randomly order the rows
+\end{enumerate}
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|c|c}
+             \text{Family Size} &  Poverty Guideline & 150\%\\
+             \hline
+             1 & \$14580 & \$21870 \\
+             2 & \$19720 & \$29580 \\
+             3 & \$24860 & \$37290 \\
+             4 & \$30000 & \$45000 \\
+             5 & \$35140 & \$52710 \\
+             6 & \$40280 & \$60420 \\
+             7 & \$45420 & \$68130 \\
+             8 & \$50560 & \$75840 \\
+        \end{tabular}
+        \caption{2023 Poverty Guidelines in Maryland (Note: after 8 persons, add \$5140 for each additional person) }
+        \label{tab:my_label}
+    \end{table}
+    \newline
+\subsection{Initial Run}
+Suppose we are allocating housing by some characteristic. For our example, we will use disability.\\
+\begin{enumerate}
+    \item All housing unit vacancy status is set to 0 (vacant) and set all wait time to be infinite
+    \item Remove ineligible applicants (those with median income above $150\%$ of the poverty line)
+    \item Move all applicants with characteristic \[\texttt{disability[i] = True}\]
+    to the top of the matrix.
+    \item Iterate through all rows of the matrix
+    \item If the top preference of the applicant is vacant, match the housing unit with the applicant and remove the row from the matrix
+    \item Set that housing unit's vacancy status to 1, and set that applicant's choice number to be 1
+    \item If the top preference of the applicant is not vacant, proceed to the next rankings. Repeat the previous steps (4-5).
+    \item If none of the ranked housing units are available, move the applicant to the top of the matrix and proceed to the next iteration.
+    \item Add 1 to the wait time of all applicants remaining in matrix $H$.
+\end{enumerate}
+\subsection{Core Algorithm: Priority Systems}
+Continue to suppose we are allocating housing by some characteristic. For our example, we will use disability.\\
+\newline
+For each period:
+\begin{enumerate}
+    \item Apply housing vacancy rate $v$, in other words randomly set the vacancy status to be $0$ for
+    \[X_v \cdot |M|\]
+    housing units.
+    where $X_v \sim Poisson(v)$.
+    \item Apply applicant departure rate $\delta$. Randomly select $\delta \cdot \texttt{len}(H)$ rows to remove
+    \item Apply applicant arrival rate $\alpha$: create $\alpha \cdot \texttt{len}(H)$ new rows and fill with preferences following the same rules described in section 2.
+    \item Examine the first row of the matrix
+    \item Let us examine the set of plausible housing matches:
+    \[J = \{j \mid p_{i,j} > 0\}\]
+    \item Choose the column index $j^*$ that that has $p_{i,j^*} = 1$ in $\mathcal{P}_i$.
+    \item Examine whether the particular housing unit of size $s_i$ is available:
+        \begin{itemize}
+        \item If available, match applicant $i$ with housing unit of capacity $s_i$. Set that housing unit as occupied (vacancy status = 1), and mark the choice number of applicant $i$ has 1. Then, remove applicant $i$ from the matrix (remove row $\mathcal{P}_i$)
+        \item If not available, proceed to the next ranked housing unit and check for availability. Follow the same rules from the previous step.
+        \item If not available and ALL ranked housing units have been checked, move the applicant $i$ to the top of the waitlist and proceed. 
+    \end{itemize}
+    \item For all applicants $i$ still in matrix $H$, increase their wait time by 1. 
+    \item Proceed to the next period. Repeat all steps until matrix $H$ is empty or we have run $10^6$ iterations.
+\end{enumerate}
+Broadly, this process can be visually represented by the image below:
+\begin{center}
+    \includegraphics[scale=0.44]{doc/Setup Image.png}
+\end{center}
+With steps:
+\begin{enumerate}
+    \item N applicants with characteristic vectors of size k and preference vectors of size m apply for housing through the government. 
+    \item Ineligible applicants are disqualified, while eligible applicants are ordered. Compute the matrix of applicant preferences and characteristics. Order matrix rows based on some priority system.
+    \item Applicants are matched to housing as it becomes available according to their queue number. The corresponding row is removed from the matrix and the next applicant becomes first in line.
+\end{enumerate}
+
+\section{Measurement of Fairness}
+
+Since algorithm design is ultimately a human-driven process, we intend to introduce measures
+of fairness to track different applications of our priority system. Notedly, data collection was conducted externally, so its particular impact on the algorithm’s fairness assessment cannot be discerned. Furthermore, though there is no classifier that can handle all notions of fairness, previous study has been done on the fairness in allocation systems.
+
+For instance, Jo, Tang, Dullerud, Sina Aghaei, Rice, and Vayanos (2022) propose a framework
+for fairness evaluation in contextual resource allocation systems that is inspired by fairness
+metrics in machine learning. They find that there is often incompatibility between allocation
+fairness and outcome fairness. In other words, the distribution mechanism itself may be fair,
+even if end results are not equitably distributed. They also conclude that “policies that prioritize based on a vulnerability score will usually result in unequal outcomes across groups, even if the score is perfectly calibrated.” This is relevant in our consideration of priority characteristics.
+
+Next, Rodolfa, Lamba, and Ghani (2021) explain the importance of algorithms being sensitive to
+the possible worsening of pre-existing inequalities upon their implementation; this introduces the idea of temporal fairness analysis. Lastly, Bunce, Richardson, et al. (2021) review CBDG,
+HUD's best-known formula for allocating 3.3 billion USD of federal funds to 1,239 jurisdictions. They find that over the past 50 years, “equity under the current CDBG formula has considerably worsened, [...] the formula still provides more funding per capita to higher-need communities than to lower-need communities.” To determine if this is the case with our algorithm, we introduce two measures of fairness.
+
+\subsection{Average Wait Time}
+
+Let $H_1, H_2, \dots, H_\ell$ be subsets of our data, grouped by some characteristic $S_k$. Furthermore, for every applicant $X \in H_k$, let $T_i$ represent the wait time of the applicant $i$ and $t_k$ be the average wait time of applicants in the $k$-th subset. Namely,
+\[t_k = \frac{1}{|H_k|}\sum_{i=1}^{|H_k|}T_i\]
+Then, we calculate fairness by calculating average wait time for each subset $H_k$, which is organized by characteristic $S_k$. We want $S_k$ and the characteristic used for the priority system to be \text{different}. Then, we measure fairness by the equality group fairness metric:
+\[\text{minimize}(t_i - t_j) \quad \text{ for } i \neq j\]
+\subsection{Probability of Top Housing Choice}
+We introduce another metric of fairness that determines the probability that a certain group gets their top housing choice. \\
+\newline
+Similarly, let $H_1, H_2, \dots, H_\ell$ be subsets of our data, grouped by some characteristic $S_k$. Recall that each applicant has a characteristic $Y_k$ which tracks their choice number (i.e. whether they got their top choice, second choice, etc.) \\
+\newline
+Then, we calculate fairness by calculating the probability that an applicant in $H_k$ is matched with their top housing choice. Namely, we measure fairness by aiming to achieve:
+\[\frac{P(Y = 1 | H_i)}{P(Y = 1 | H_j)} = 1 \quad \text{ for } i \neq j\]
+\section{Desired Results}
+We aim to run this algorithm on a few different priority systems, including: high income, low income, disability, veterans status, and number of children. \\
+\newline
+For each priority system, we will run this algorithm $10^6$ times, calculating the two different metrics of fairness after each simulation. Then, we will plot these two different metrics of fairness and analyze its distribution. \\
+\newline
+Following that, we will also compare the distribution and statistical summaries of these fairness metrics as we vary different priority systems.
+\end{document}
