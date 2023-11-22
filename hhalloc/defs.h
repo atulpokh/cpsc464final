@@ -1,3 +1,4 @@
+//atul@cs.yale.edu
 /* Common definitions */
 
 typedef struct household *hhPointer;

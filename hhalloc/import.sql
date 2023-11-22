@@ -9,7 +9,15 @@ ethnicity INTEGER NOT NULL,
 u18 INTEGER NOT NULL,
 o65 INTEGER NOT NULL,
 vet INTEGER NOT NULL,
-disability INTEGER NOT NULL,
+disability INTEGER NOT NULL
+);
+
+.import hh_nohead.csv hh
+
+DROP TABLE IF EXISTS match;
+CREATE TABLE match(
+hhid INTEGER NOT NULL UNIQUE,
+huid INTEGER NOT NULL,
 waittime INTEGER NOT NULL,
 choice INTEGER NOT NULL,
 whenjoined INTEGER NOT NULL,
@@ -17,11 +25,10 @@ whenleft INTEGER NOT NULL,
 pref1 INTEGER NOT NULL,
 pref2 INTEGER NOT NULL,
 pref3 INTEGER NOT NULL,
-pref4 INTEGER NOT NULL,
-huid INTEGER NOT NULL
+pref4 INTEGER NOT NULL
 );
 
-.import hh_nohead.csv hh
+.import match_nohead.csv match 
 
 DROP TABLE IF EXISTS hu;
 CREATE TABLE hu(

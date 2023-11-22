@@ -9,6 +9,7 @@
 echo "Stripping headers from csv files..."
 tail -n +2 hh.csv > hh_nohead.csv
 tail -n +2 hu.csv > hu_nohead.csv
+tail -n +2 match.csv > match_nohead.csv
 
 echo "Importing the following tables into hhalloc.sqlite..."
 rm hhalloc.sqlite
@@ -25,5 +26,11 @@ sqlite3 hhalloc.sqlite "PRAGMA table_info(hu)"
 echo ""
 echo "First five rows of hu..."
 sqlite3 hhalloc.sqlite "select * from hu limit 5"
+echo ""
+echo "Table match: "
+sqlite3 hhalloc.sqlite "PRAGMA table_info(match)"
+echo ""
+echo "First five rows of match..."
+sqlite3 hhalloc.sqlite "select * from match limit 5"
 echo ""
 echo "Done."
