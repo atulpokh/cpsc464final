@@ -24,11 +24,15 @@
 #include <limits.h>
 #include "defs.h"
 
-#define TOTAL_EXPERIMENTS 1000 // total number of experiments
+#define TOTAL_EXPERIMENTS 10 // total number of experiments
 #define TOTAL_ROUNDS 1		// total number of time periods in each experiment
 #define DBFILE "hhalloc.sqlite"
 #define MAX_QUERY_LEN 500
 #define MAX_PREF 4 // maximum number of preferences that hh have
+
+#define VACATE_RATE 1 // number of housing units vacated per round (day)
+
+
 
 sqlite3 *db;
 int hhmatch;		// preference matching housing unit returned by sql query
@@ -388,15 +392,19 @@ int main()
 		handle_error(rc, zErrMsg);
 	
 		// Step 2: assign available units to households using specified method
+		// A round is equivalent to a day
+		// Matching happens every day
+		// Volatility occurs every day
 
 		for (curRound = 0; curRound < TOTAL_ROUNDS; curRound++)
 		{
 			assignh(0);
 			// households can vacate
-			//	vacate_units();
+			vacate_units();
 			// waitlisters can vacate
 			//	vacate_waitlist());
 			// new people can be added to waitlist
+			// add_to_waitlist();
 			// printmetrics();
 		}
 
