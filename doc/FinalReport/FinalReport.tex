@@ -182,7 +182,7 @@ The application for housing support from the government often looks like the fol
 \begin{figure}
     \centering
     \includegraphics[width=0.75\linewidth]{elm.png}
-    \caption{Example of Housing Portal}
+    \caption{Example Housing Portal for New Haven, CTf}
 \end{figure}
 \\ Misalignment emerges in such an ecosystem as the group that makes decisions about the distribution of housing and what features necessitate prioritization, i.e. government and government agents, is not benefiting from it. A growing crisis ensues as demand continues to outweigh the supply of public housing, with no solution in sight. \\
 \newline
@@ -224,9 +224,9 @@ In our project, we aim to analyze the demographic effects of tenant populations 
 \newpage
 \section{The Model/Framework}
 \noindent
-Our city of choice to model policy changes is Baltimore. With a population of close to 600,000 and a public housing system containing approximately 20,000 properties, Baltimore's robust and widely used public housing system is an ideal choice for analyzing the impacts of differing priority systems on allocation outcomes. \\
+Our city of choice to model policy changes is Baltimore beause of data vailability. With a population of close to 600,000 and a public housing system containing approximately 20,000 properties, Baltimore's robust and widely used public housing system is a suitable choice for analyzing the impacts of differing priority systems on allocation outcomes. \\
 \newline
-Demand for public housing in Baltimore is also exceedingly high. The public housing system lottery opened for the first time since 2019 this August, with nearly 30,000 applicants applying during the two week window (\href{https://www.wypr.org/wypr-news/2023-08-14/28-000-apply-for-baltimore-city-housing-wait-list-two-week-window-ends-tonight}{Baltimore WYPR}). Priority systems are unfortunately essential to best allocate the limited available housing to those most in need. \\
+Demand for public housing in Baltimore is also exceedingly high. The public housing system lottery opened for the first time since 2019 in August of 2023, with nearly 30,000 applicants applying during the two week window (\href{https://www.wypr.org/wypr-news/2023-08-14/28-000-apply-for-baltimore-city-housing-wait-list-two-week-window-ends-tonight}{Baltimore WYPR}). Priority systems are therefore necessary to best allocate the limited available housing to those most in need. \\
 \newline
 
 \subsection{Model Data and Privacy Considerations}
@@ -238,7 +238,7 @@ The ACS has taken steps to mitigate the exposure of sensitive attributes, such a
 \newline
 Because of the existing measures taken by the ACS to preserve privacy, we do not feel that additional measures need to be taken, especially given that our model is reporting only on aggregate demographic changes as a result of different priority systems. However, in real world systems where technology is used in housing allocation, information security should be paramount. City officials should take care to ensure that individual applicant data is stored on secure servers and not susceptible to data breaches to the best of their ability. 
 \subsubsection{Data Processing}
-After downloading Baltimore City's data from the ACS website, we processed the raw file in R to yield a usable input into our model. We began by selecting only the relevant attributes specified in \autoref{3.2}. From there, we combined individuals into households by serial number and re-coded the data, disqualifying households whose total income exceeded $150\%$ of the poverty line (see Table 2). See the \href{https://github.com/atulpokh/cpsc464final/tree/main}{Github}  for full processing code. \\
+After downloading Baltimore City's data from the ACS website, we processed the raw file in R to yield a usable input into our model. We began by selecting only the relevant attributes specified in \autoref{3.2}. From there, we combined individuals into households by serial number and re-coded the data, disqualifying households whose total income exceeded $150\%$ of the poverty line (see Table 2). See the \href{https://github.com/atulpokh/cpsc464final/tree/main}{Github} repository for full  code. \\
 \newline
 We proceed to describe our model, which allocates $M$ housing units to $N$ applicants. 
 \subsection{Housing Development Attributes}
@@ -439,7 +439,7 @@ With steps:
 }
 \end{algorithm}
 \newpage
-\section{(Desired) Empirical results}
+\section{Empirical results}
 Running our algorithm in Python on the cleaned Baltimore data, we get resulting wait times and probability of top choice for each household. We aggregate these data by racial group and visualize the these metrics for each priority system, as shown below. In these figures, blue bars represent the probability of top choice and red lines represent the average wait time to be housed in periods.
         \begin{table}[h]
             \centering
@@ -492,12 +492,12 @@ Taking the results and discussed above, we consider how each allocation preforms
 \newline
 Using the fairness metrics discussed above, we consider the fairness of each priority system, using race as our grouping characteristic. Each fairness column is calculated by
 $$
-\biggr{|}1 - \sum_i \sum_j \frac{X[i]}{X[j]}\biggr{|} \quad \text{ for } i \neq j\
+\biggr{|}1 - \frac{1}{(n^2 - n)}\sum_i \sum_j \frac{X[i]}{X[j]}\biggr{|} \quad \text{ for } i \neq j\
 $$
-where $X$ is a vector of either average wait time or average percent of top choice, and each index of $X$ represents a different racial group. Lower measures of this metric are better, as they indicate a higher degree of fairness across racial groups for percentage of top choice and average wait time. Note that values of zero are omitted when preforming this calculation.\\
+where $X$ is a vector of either average wait time or average percent of top choice, and each index of $X$ represents a different racial group. Essentially, this is an average of the ratio of group to group fairness measures for each possible group combination. Lower measures of this metric are better, as they indicate a higher degree of fairness across racial groups for percentage of top choice and average wait time. Note that values of zero are omitted when preforming this calculation.\\
 \newline
 The results of this analysis are below:
-    \begin{table}[htp]
+    \begin{table}[H]
         \centering
         \begin{tabular}{c|c|c|c|c}
              Priority &  Average \% Top Choice & Average Waittime & Top Choice Fairness & Average Waittime Fairness \\
