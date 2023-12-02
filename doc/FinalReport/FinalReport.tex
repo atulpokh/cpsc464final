@@ -1,5 +1,3 @@
-,
-
 \documentclass[11pt]{article}
 \usepackage{amsmath,amssymb,amsfonts} 
 \usepackage{epsfig} \usepackage{latexsym,nicefrac,bbm}
@@ -114,11 +112,8 @@
 \def\abs#1{\left| #1 \right|}
 \newcommand{\norm}[1]{\ensuremath{\left\lVert #1 \right\rVert}}
 
-
-
 \newcommand{\tr}[1]{\mathop{\mbox{Tr}}\left({#1}\right)}
 \newcommand{\diag}[1]{{\sf Diag}\left({#1}\right)}
-
 \newcommand\set[1]{\left\{#1\right\}} %usage \set{1,2,3,,}
 \newcommand{\poly}{\mathrm{poly}}
 \newcommand{\floor}[1]{\left\lfloor\, {#1}\,\right\rfloor}
@@ -126,20 +121,10 @@
 \newcommand{\comp}[1]{\overline{#1}}
 \newcommand{\pair}[1]{\left\langle{#1}\right\rangle} %for inner product
 \newcommand{\smallpair}[1]{\langle{#1}\rangle}
-
 \newcommand{\inparen}[1]{\left(#1\right)}             %\inparen{x+y}  is (x+y)
 \newcommand{\inbraces}[1]{\left\{#1\right\}}           %\inbrace{x+y}  is {x+y}
 \newcommand{\insquare}[1]{\left[#1\right]}             %\insquare{x+y}  is [x+y]
 \newcommand{\inangle}[1]{\left\langle#1\right\rangle} %\inangle{A}    is <A>
-
-
-\newenvironment{proofsketch}{\begin{trivlist} \item {\bf
-Proof Sketch:~~}}
-  {\qedsketch\end{trivlist}}
-
-\newenvironment{proofof}[1]{\begin{trivlist} \item {\bf Proof
-#1:~~}}
-  {\qed\end{trivlist}}
 
 
 \title{\bf CPSC 464/564: Modeling Alternative Affordable Housing Priority Systems}
@@ -149,17 +134,11 @@ Proof Sketch:~~}}
 Professor: Nisheeth K. Vishnoi
 }
 
-
-
-
-
 \begin{document}
-
-
 \maketitle
  
 \begin{abstract}
-Affordable housing is a widespread issue which pervades the United States. Yet, despite its magnitude, the system that each jurisdiction uses is quite opaque. Our project aims to fill this gap by leveraging publicly available data specific to Baltimore's low-income housing population. We intend to develop and implement a model that captures the dynamics of the housing allocation system by accounting for factors such as wait list turnover and applicant characteristics. Through this model, we will conduct simulations to predict how alternative priority systems might influence the demographic composition of housing recipients within Baltimore. Overall, we aim to provide a data-driven understanding of different affordable housing allocation strategies and their consequences on tenant demographics. We also assess the fairness and the impact through various empirically defined fairness metrics. 
+Affordable housing is a widespread issue which pervades the United States. Yet, despite its magnitude, the system that each jurisdiction uses is quite opaque. Our project aims to fill this gap by leveraging publicly available data specific to Baltimore's low-income housing population. We intend to develop and implement a model that captures the dynamics of the housing allocation system by accounting for factors such as housing vacancies and applicant characteristics. Through this model, we will conduct simulations to illustrate how alternative priority systems might alter the demographic composition of housing recipients within Baltimore. Overall, we aim to provide a data-driven understanding of different affordable housing allocation priority schemes and their possible consequences on tenant demographics. We also assess the fairness and the impact of these schemes.
 \end{abstract}
 
 
@@ -183,7 +162,7 @@ The application for housing support from the government often looks like the fol
 \begin{figure}
     \centering
     \includegraphics[width=0.75\linewidth]{elm.png}
-    \caption{Example Housing Portal for New Haven, CTf}
+    \caption{Example Housing Portal for New Haven, CT}
 \end{figure}
 \\ Misalignment emerges in such an ecosystem as the group that makes decisions about the distribution of housing and what features necessitate prioritization, i.e. government and government agents, is not benefiting from it. A growing crisis ensues as demand continues to outweigh the supply of public housing, with no solution in sight. \\
 \newline
@@ -193,7 +172,8 @@ Consider New York City, where there are around 200,000 public housing units for 
 % \newline
 In general, there are two main modes of allocating housing to those who want it. One is the market mechanism in which those who can pay market price of housing receive it. A second one is through public housing agencies or similar non-market modes in which the cost of housing is significantly subsidized below market price. When there are fewer housing units than the number of those who want it and price cannot be used to allocate, who receives housing depends on an allocation algorithm. Some common algorithms for allocating housing in this latter scenario are lotteries and waitlists, with or without some other group-based preference ranking applied to it.\\
  \newline
-There are two variations of non-market allocation algorithms depending on how much choice the recipient has. In the first, the recipient is presented with a choice of one or more units. They can either choose from among the set or choose to go back into the waitlist or lottery. While the fairness properties of different allocation schemes have been examined, to our knowledge, the fairness properties of allowing individuals to choose whether to accept or not is relatively understudied particularly in the presence of bias.\\
+There are two variations of non-market allocation algorithms depending on how much choice the recipient has. In the first, the recipient is presented with a choice of one or more units. They can either choose from among the set or choose to go back into the waitlist or lottery. 
+%While the fairness properties of different allocation schemes have been examined, to our knowledge, the fairness properties of allowing individuals to choose whether to accept or not is relatively understudied particularly in the presence of bias.\\
  \newline
 While reversing the affordable housing crisis initially seems a problem unlikely to be solved in our generation, it is an urgent reality that must be confronted. The main case for it relies on the benefits of residential stability.~\cite{maqbool_insightsfromhousing_nodate} There have also been accounts of positive impacts of affordable housing on health. Furthermore, secure housing also improves education outcomes by reducing high household mobility, of which the US has the highest rate across developed countries; there is a strong, negative relationship between such frequent residential mobility and educational performance. Lastly, in response to the argument that affordable housing threatens neighborhood property values, Tighe et al. ~\cite{tighe_affordable_2012}  demonstrate the community wide benefits of affordable housing.\\
 \newline
@@ -201,17 +181,18 @@ There is widespread precedent in Europe that discussions on public housing refor
 \newline
 There are two significant bottlenecks in the United States that have previously prevented larger action on this issue that could lead to similar outcomes as in Europe. The first is a legislative measure; while some people may argue that this supply-side problem can be solved by building more public housing units, this is not legally possible due to oft-recurring challenges like the Nixon-era construction moratorium and Clinton Faircloth Amendment to the 1937 Housing Bill~\cite{hud_guidance_nodate}. The second concerns limited representation at City Council meetings across the nation whose inconvenient meeting times and lack of principled approach often lead to exclusions of certain populations ~\cite{mcnee_nimbyism_2022}. Other related barriers include exclusionary zoning and parking requirements~\cite{jenna_davis_double-edged_2021} .\\
 \newline
-The work of this paper will be twofold: first, we aim to model the existing conditions of our chosen city's public housing allocation, followed by assessing new priority systems and examining their effects on the demographics of those we predict will be offered public housing. Figure 3 shows these main tasks and contributions.\\
+The work of this paper will be twofold: first, we aim to model the existing conditions of our chosen city's public housing allocation (Baltimore), followed by assessing various priority systems and examining their effects on the composition of housing recipients. 
 \begin{figure}
     \centering
     \includegraphics[width=0.75\linewidth]{schematic_priority _systems.png}
     \caption{Diagram of public housing allocation systems}
     \label{fig:schematic}
 \end{figure}
+\\
 \newline
-Little is typically known about the methods that cities use to allocate public housing, meaning our first task is to model this process. Using publicly available data on who is awarded housing, we can estimate this process for our chosen city. Relying on estimations made by previous works, we can also integrate assumptions about the rate at which housing becomes available into our predictions to gain a comprehensive approximation of overall public housing availability and allocation. We can apply this model to our city of choice to estimate the flow of applicants in, through, and out of public housing under the city's current system. \\
-\newline
-With an established model for the present conditions of a city, we can proceed to evaluate alternative allocation systems for fairness. We will apply these alternative systems to our model in order to comment on how the characteristics of tenants shift with the goal of informing future decision making in this sphere. This makes use of a conceptual novelty, in that we expect that ours will be one of the few empirical examinations of fairness implications of choice in housing allocation schemes, as well as a technical novelty in that we will have to develop novel means of approximating allocation mechanisms.
+Little is typically known about the methods that cities use to allocate public housing, meaning our first task is to model this process. %Using publicly available data on who is awarded housing, we can estimate this process for our chosen city. 
+Relying on estimations made by previous works, we can also integrate assumptions about the rate at which housing becomes available into our models to gain a better approximation of overall public housing availability and allocation. We can apply this model to our city of choice to estimate the effects of various priority systems based on current demographic composition. Then, using a model for the general allocation mechanism, we can proceed to overlay alternative systems to measure fairness. 
+\newpage
 \section{Other related works}
 The allocation of scarce resources is a classic problem that pervades social service delivery. At the highest level, prior research has examined the necessity of trade-offs for fairness in social contexts \cite{mashiat2022trade}, arguing that often times many reasonable definitions of equity cannot hold simultaneously. This paper in particular creates a metric of fairness to analyze average realized utility of a resulting outcome, but does not give way to implement allocation systems, which we wish to examine. \\
 \newline
@@ -219,20 +200,18 @@ There are a variety of studies regarding affordable housing and approximating al
 \newline
 Some papers have abstracted the problem of housing allocation into that of designing waitlists and lotteries \cite{arnosti2020design}. They claim that two approaches of housing allocation create near-optimal matches: independent lotteries and waitlists. They examine in great detail these two modes of allocation, but does not examine the inherent factor of consumer choice in the housing allocation process. Another paper addresses this shortfall by implementing a modified version of the latter of these systems on housing data from Pittsburgh \cite{harvardpublichousing}. Specifically addressing the issue of allocation inefficiency, they argue that implementing an independent waitlist per building reduces the amount of vacant buildings emptied during turnover. However, this algorithm does not account for the nuances of household differences (size, number of children/elderly, veteran status...), which is what we intend to explore. \\
 \newline
-In our project, we aim to analyze the demographic effects of tenant populations by changing the order of allocations, as in \cite{nyuaffordablehousing}. This paper tackles the issue that housing allocation methods are often unknown and opaque. Thus, they created an algorithm to include priority systems (moving populations with certain characteristics to the front of a queue). Specifically, they analyzed the changes in tenant composition by prioritizing high income households, low income households, the elderly population, and families with children under 18. While the model does shed light on the magnitude of change in these particular orderings, it limits the eligible applicants to those whose household income is above 80\% of the area median income, which severely skews the results. There are also many other key variables such as families with victims of domestic violence, military status, and veteran status that were not explored.\\
+In our project, we aim to analyze the demographic effects on tenant populations by changing the order of allocations, as in \cite{nyuaffordablehousing}. This paper tackles the issue that housing allocation methods are often unknown and opaque. Thus, they created an algorithm to include priority systems (moving populations with certain characteristics to the front of a queue). Specifically, they analyzed the changes in tenant composition by prioritizing high income households, low income households, the elderly population, and families with children under 18. While the model does shed light on the magnitude of change in these particular orderings, it limits the eligible applicants to those whose household income is above 80\% of the area median income, which severely skews the results. There are also many other key variables such as families with victims of domestic violence, military status, and veteran status that were not explored.\\
 
-
-\newpage
 \section{The Model/Framework}
 \noindent
-Our city of choice to model policy changes is Baltimore beause of data vailability. With a population of close to 600,000 and a public housing system containing approximately 20,000 properties, Baltimore's robust and widely used public housing system is a suitable choice for analyzing the impacts of differing priority systems on allocation outcomes. \\
+Our city of choice to model policy changes is Baltimore because data is available. With a population of close to 600,000 and a public housing system containing approximately 20,000 properties, Baltimore's robust and widely used public housing system is a suitable choice for analyzing the impacts of differing priority systems on allocation outcomes. \\
 \newline
 Demand for public housing in Baltimore is also exceedingly high. The public housing system lottery opened for the first time since 2019 in August of 2023, with nearly 30,000 applicants applying during the two week window~\cite{emily_hofstaedter_28000_nodate}. Priority systems are therefore necessary to best allocate the limited available housing to those most in need.  It is therefore important to understand the fairness properties of different allocation schemes. \\
 
 \subsection{Model Data and Privacy Considerations}
 \subsubsection{Overview}Our model employs the 2021 American Community Survey (ACS) microdata~\cite{us_census_bureau_mdat_nodate}. The ACS is an annual survey conducted with the aim of being a nationally representative sample of demographic, economic, and housing information. We use demographic variables contained in the ACS data to estimate the number of households eligible for public housing. To gain the most representative demographic variables, we specifically use the 5-year estimates, which average data over a five year period. \\
 \newline
-Due to the sensitive information collected by the ACS, such as location, income, number of people in households, and so on, privacy considerations exist. Using this data, it could be possible to 'reverse engineer' the survey to gain knowledge about sensitive attributes. For instance, an adversary knowing a family's approximate location and income could use the survey to identify the household's response and gain knowledge about the disability status of the household members. \\
+Due to the sensitive information collected by the ACS, such as location, income, number of people in households, and so on, privacy considerations exist. Using this data, it could be possible to `reverse engineer' the survey to gain knowledge about sensitive attributes. For instance, an adversary knowing a family's approximate location and income could use the survey to identify the household's response and gain knowledge about the disability status of the household members. \\
 \newline
 The ACS has taken steps to mitigate the exposure of sensitive attributes, such as perturbing the attributes uniquely of high income individuals. While the ACS previously hoped to attain differential privacy by 2025, this goal has currently been put on hold~\cite{donna_daily_disclosure_nodate} as a result of internal research finding that a formally private solution currently does not yet exist. Instead, alternative solutions like data perturbations and the inclusion of synthetic data in published ACS reports have been employed. \\
 \newline
@@ -296,14 +275,14 @@ Let $N$ be the number of applicants to the housing system. Each applicant $1 \le
 \subsection{Housing Allocation Priority Systems}
 We consider five possible priority systems, drawing examples from major cities like Cambridge and New York. It's important to note that the list of systems we study is non-exhaustive, rather, it is meant to serve as a baseline approach that could be built upon in real world contexts. The priority systems we consider are as follows:
 \begin{enumerate}
-    \item \textbf{Priority for households with a member who is disabled.} This priority system recognizes the additional challenges that households with disabled members may face. Allocating resources or benefits to such households ensures a more inclusive and equitable approach, acknowledging the unique needs and support requirements for disabled individuals.
-    \item \textbf{Priority for households with a member who is a veteran.} Veterans often face distinct challenges upon returning to civilian life, such as reintegration into the workforce and potential physical or mental health issues. Prioritizing veteran households acknowledges their service to the nation and aims to provide support as they transition back into civilian life.
-    \item \textbf{Priority for households with children, ordering those with the most children first.} Children represent the future of society, and supporting households with more children can be seen as an investment in the next generation. This priority system aims to address the financial and logistical challenges that larger families may encounter, ensuring the well-being of children and promoting family stability.
-    \item \textbf{Priority for households with elderly members, ordering those with the most first.} Aging populations often require additional care and support. Prioritizing households with more elderly members recognizes the increased potential for health-related needs and aims to enhance the quality of life for older individuals. This approach aligns with a societal commitment to respect and care for the elderly.
-    \item \textbf{Priority for households with the lowest income, ordering those households first.} Socioeconomic disparities can significantly impact individuals and families. Prioritizing households with the lowest income addresses the immediate needs of those facing financial hardship. This system aims to reduce inequality and provide essential resources to those who may be most vulnerable in society.
+    \item \textbf{Priority for households with a member who is disabled.} This priority system recognizes the additional challenges that households with disabled members may face. Allocating resources or benefits to such households ensures a more inclusive and equitable approach, acknowledging the unique needs and support requirements for disabled individuals. Coded True or False.
+    \item \textbf{Priority for households with a member who is a veteran.} Veterans often face distinct challenges upon returning to civilian life, such as reintegration into the workforce and potential physical or mental health issues. Prioritizing veteran households acknowledges their service to the nation and aims to provide support as they transition back into civilian life. Coded True or False.
+    \item \textbf{Priority for households with children, ordering those with the most children first.} Children represent the future of society, and supporting households with more children can be seen as an investment in the next generation. This priority system aims to address the financial and logistical challenges that larger families may encounter, ensuring the well-being of children and promoting family stability.  Range 0 to 8.
+    \item \textbf{Priority for households with elderly members, ordering those with the most first.} Aging populations often require additional care and support. Prioritizing households with more elderly members recognizes the increased potential for health-related needs and aims to enhance the quality of life for older individuals. This approach aligns with a societal commitment to respect and care for the elderly. Range 0 to 3.
+    \item \textbf{Priority for households with the lowest income, ordering those households first.} Socioeconomic disparities can significantly impact individuals and families. Prioritizing households with the lowest income addresses the immediate needs of those facing financial hardship. This system aims to reduce inequality and provide essential resources to those who may be most vulnerable in society. Continuous, range from 0 to 81900. 
 \end{enumerate}
 \subsection{Housing Allocation Algorithm}
-Consider the following $N$ by $M$ matrix. 
+In what follows, consider the following $N$ by $M$ matrix. 
 \[H =
 \begin{bmatrix}
     \mathcal{P}_1 \\
@@ -318,8 +297,7 @@ Consider the following $N$ by $M$ matrix.
     \vdots & \quad & \ddots & \vdots \\
     p_{N,1} & p_{N,2} & \cdots & p_{N,M} 
 \end{bmatrix}\]
-where $p_{i,j}$ represents the preference ranking for applicant $i$ on housing development $j$. \\
-\newline
+where $p_{i,j}$ represents the preference ranking for applicant $i$ on housing type $j$.
 % We introduce two other parameters:
 % \begin{itemize}
 %    \item Applicant departure rate $\delta$: at the beginning of each period, we remove $\delta \cdot \texttt{len}(H)$ applicants from the matrix at random. Assume that $\delta$ is constant every period.
@@ -330,7 +308,9 @@ where $p_{i,j}$ represents the preference ranking for applicant $i$ on housing d
     \item Start with $N$ applicants
     \item Generate a $N \times M$ matrix populated with their preference vectors
     \item Eliminate ineligible applicants based on median income. Applicants with household income $150\%$ of the poverty line or below are eligible.
-    \begin{table}[htp]
+    \item Randomly order the rows
+\end{enumerate}
+    \begin{table}[h!tp]
         \centering
         \begin{tabular}{c|c|c}
              \text{Family Size} &  Poverty Guideline & 150\%\\
@@ -347,26 +327,23 @@ where $p_{i,j}$ represents the preference ranking for applicant $i$ on housing d
         \caption{2023 Poverty Guidelines in Maryland (Note: after 8 persons, add \$5140 for each additional person) }
         \label{tab:my_label}
     \end{table}
-    \item Randomly order the rows
-\end{enumerate}
 
 \subsubsection{Initial Data Filtering}
-Suppose we are allocating housing by some particularly priority system. For our example, we will use disability.\\
+Suppose we are allocating housing by some particular priority system.
 \begin{enumerate}
     \item Create dictionary of housing units available according to \autoref{3.2}.
     \item We assume that for each housing type, 1 in every 25 housing units is available in the first period.
     \item Remove ineligible applicants (those with median income above $150\%$ of the poverty line)
-    \item Move all applicants with characteristic \[\texttt{disability[i] = True}\]
-    to the top of the matrix.
+    \item Order applicants by some characteristic according to the chosen priority system. (i.e. if priority system is by income, lowest income applicants move to the top of the matrix, etc.)
 \end{enumerate}
 \subsubsection{Core Algorithm}
 \newline
-For each period:
+For each period (monthly, for 5 years):
 \begin{enumerate}
-    \item Apply housing vacancy rate $v$, in other words randomly add
+    \item Apply housing vacancy rate $v=0.004$, in other words randomly add
     \[X_v \cdot |M|\]
-    different types of housing units.
-    where $X_v \sim Uniform(v)$.
+    different types of housing units, 
+    where $X_v \sim \text{Uniform}(v)$. This represents 4 out of every one thousand units becoming vacant every month.
    % \item Apply applicant departure rate $\delta$. Randomly select $\delta \cdot \texttt{len}(H)$ rows to remove
     % \item Apply applicant arrival rate $\alpha$: create $\alpha \cdot \texttt{len}(H)$ new rows and fill with preferences following the same rules described in section 2.
     \item Examine the first row of the matrix and the set of plausible housing matches:
@@ -380,21 +357,21 @@ For each period:
     \end{itemize}
     \item For all applicants $i$ still in matrix $H$, increase their wait time by 1. 
     \item Proceed to the next period. 
-    \item Repeat all steps until matrix $H$ is empty or we have run $10^6$ iterations.
+    \item Repeat all steps until matrix $H$ is empty or we have completed $60$ periods. This corresponds to one allocation process every month for 5 years.
 \end{enumerate}
-Broadly, this process is illustrated in Figure~\ref{fig:schematic}.
-\begin{figure}[h!]
-    \includegraphics[scale=0.65]{doc/Setup Image.png}
-    \caption{Visual representation of the main steps of our matching algorithm.}
-    \label{fig:schematic}
-\end{figure}
-\newline
-The steps of the matching algorithm illustrated in Figure~\ref{fig:schematic} are as follows:
+The three broad components of this process are illustrated in Figure~\ref{fig:schematic}.
+These components are as follows:
 \begin{enumerate}
     \item $N$ applicants with characteristic vectors of size $k$ and some preferences (indicated in section 3.2) apply for housing through the government. 
     \item Ineligible applicants are disqualified, while eligible applicants are ordered. Order waitlist based on some priority system.
     \item Applicants are matched to housing as it becomes available. The corresponding row is removed from the matrix and the next applicant becomes first in line.
 \end{enumerate}
+\begin{figure}[h!]
+    \includegraphics[scale=0.65]{doc/Setup Image.png}
+    \caption{Visual representation of the main steps of our matching algorithm.}
+    \label{fig:schematic}
+\end{figure}
+
 \begin{algorithm}
 \caption{Main Algorithm}
 \SetKwInOut{Input}{Input}
@@ -407,7 +384,7 @@ The steps of the matching algorithm illustrated in Figure~\ref{fig:schematic} ar
     \eIf{$priority = income$}{
         $waitlist \leftarrow$ sort from low to high income
     }{
-        $waitlist \leftarrow$ sort from high to low (number of children, elderly)
+        $waitlist \leftarrow$ sort from high to low (children, elderly, veteran, disability)
     }
     $period \leftarrow 12 \cdot 5$ (5 years, 12 months)\;
     \newline
@@ -439,20 +416,20 @@ The steps of the matching algorithm illustrated in Figure~\ref{fig:schematic} ar
 \end{algorithm}
 
 \section{Empirical results}
-An experiment is a fixed number of periods  of the matching algorithm on a fixed housing and applicant dataset.  All of our experiments consist of 60 periods, interpreted as one matching between the waitlist and vacant units every month for five years. Therefore, a single experiment simulates the matching outcomes of our matching algorithm on Baltimore housing and applicant data over a period of five years.
+An experiment is a fixed number of periods  of the matching algorithm on a fixed housing and applicant dataset.  All of our experiments consist of 60 periods, interpreted as one round of matching between the waitlist and vacant units every month for five years. Therefore, a single experiment simulates the matching outcomes of our algorithm on Baltimore housing and applicant data over a period of five years.
 
 Each experiment produces the following metrics:
 \begin{enumerate}
 \item Average waittime for each racial group (8 groups) for each priority system (5 systems) 
 \item Percentage of people in each group (8 groups) that get their first choice
-\item Wait time fairness of the process (1 measurement). See below.
-\item Top Choice fairness of the process (1 measurement). See below.
+\item Wait time fairness of the process (1 measurement). See ~\autoref{fairness}
+\item Top Choice fairness of the process (1 measurement). See ~\autoref{fairness}
 \end{enumerate}
 
-Therefore, running our algorithm in Python  we get resulting wait times and probability of top choice for each household. We group these data by racial group and visualize the these metrics for each priority system.   In these figures, blue bars represent the probability of top choice and red lines represent the average wait time to be housed in periods.
+Running our algorithm in Python (via a Jupyter notebook) we get resulting wait times and probability of top choice for each household. We group these data by racial group and visualize the these metrics for each priority system. In the subsequent figures, the first set represents results from a single experiment. Blue bars represent the probability of top choice and red lines represent the average wait time to be housed in periods. The next set of figures (the box and whisker plots) represents results from 10 experiments. Note that there were no eligible households belonging to racial group 4 (Alaska Native) in the Baltimore dataset. 
         \begin{table}[h]
             \centering
-                \caption{ Percentage of Top Choice (blue) vs. Average Wait Time (red) for Each Race Group \\
+                \caption{ Percentage of Top Choice (blue) vs. Average Wait Time (red) for Each Race Group for a single experiment.
                 (Order by priority system: children, disability, elderly, low to high income, veteran status)}
                 \vspace{1.1em}
                 \begin{tabular}{cc}
@@ -495,53 +472,59 @@ Therefore, running our algorithm in Python  we get resulting wait times and prob
 Since algorithm design is ultimately a human-driven process, we intend to introduce measures
 of fairness to track different applications of our priority system. Notedly, data collection was conducted externally, so its particular impact on the algorithm’s fairness assessment cannot be discerned. Furthermore, though there is no classifier that can handle all notions of fairness, previous study has been done on the fairness in allocation systems.
 
-For instance, Jo, Tang, Dullerud, Sina Aghaei, Rice, and Vayanos (2022) \cite{formulaeval3} propose a framework
+For instance, Jo et al. \cite{formulaeval3} propose a framework
 for fairness evaluation in contextual resource allocation systems that is inspired by fairness
 metrics in machine learning. They find that there is often incompatibility between allocation
 fairness and outcome fairness. In other words, the distribution mechanism itself may be fair,
 even if end results are not equitably distributed. They also conclude that “policies that prioritize based on a vulnerability score will usually result in unequal outcomes across groups, even if the score is perfectly calibrated.” This is relevant in our consideration of priority characteristics.
 
-Next, Rodolfa, Lamba, and Ghani (2021) \cite{formulaeval2} explain the importance of algorithms being sensitive to
-the possible worsening of pre-existing inequalities upon their implementation; this introduces the idea of temporal fairness analysis. Lastly, Bunce, Richardson, et al. (2021) \cite{formulaeval} review CBDG,
-HUD's best-known formula for allocating 3.3 billion USD of federal funds to 1,239 jurisdictions. They find that over the past 50 years, “equity under the current CDBG formula has considerably worsened, [...] the formula still provides more funding per capita to higher-need communities than to lower-need communities.” To determine if this is the case with our algorithm, we introduce two measures of fairness.
+Next, Rodolfa et al.\cite{formulaeval2} explain the importance of algorithms being sensitive to
+the possible worsening of pre-existing inequalities upon their implementation; this introduces the idea of temporal fairness analysis. Lastly, Bunce et al. \cite{formulaeval} review CBDG,
+HUD's best-known formula for allocating 3.3 billion USD of federal funds to 1,239 jurisdictions. They find that over the past 50 years, “equity under the current CDBG formula has considerably worsened, [...] the formula still provides more funding per capita to higher-need communities than to lower-need communities.” To determine if this is the case with our algorithm, we introduce two measures of fairness: average wait time, and probability of top housing choice. Finally, after an allocation is completed, we evaluate the model overall according to how differently groups are treated. For this, we compute a measure, for both percentage who received top-choice in each group and the average wait time for each group, of similarity across groups. 
 
 \subsubsection{Average Wait Time}
 Let $H_1, H_2, \dots, H_\ell$ be subsets of our data, grouped by some characteristic $S_k$. Furthermore, for every applicant $X \in H_k$, let $T_i$ represent the wait time of the applicant $i$ and $t_k$ be the average wait time of applicants in the $k$-th subset. Namely,
-\[t_k = \frac{1}{|H_k|}\sum_{i=1}^{|H_k|}T_i\]
-Then, we calculate fairness by calculating average wait time for each subset $H_k$, which is organized by characteristic $S_k$. We want $S_k$ and the characteristic used for the priority system to be \text{different}. Then, we measure fairness by the equality group fairness metric:
-\[\text{minimize}(t_i - t_j) \quad \text{ for } i \neq j\]
+\begin{equation}
+t_k = \frac{1}{|H_k|}\sum_{i=1}^{|H_k|}T_i\
+\end{equation}
+Then, we calculate fairness by calculating average wait time for each subset $H_k$, which is organized by characteristic $S_k$. We want $S_k$ and the characteristic used for the priority system to be \text{different}. We take the difference between $t_i - t_j$ for $i,j \in [k]$ and $i \neq j$ to indicate fairness.
+%\begin{equation}
+%\text{minimize}(t_i - t_j) \quad \text{ for } i \neq j
+%\end{equation}
 \subsubsection{Probability of Top Housing Choice}
 We introduce another metric of fairness that determines the probability that a certain group gets their top housing choice. \\
 \newline
 Similarly, let $H_1, H_2, \dots, H_\ell$ be subsets of our data, grouped by some characteristic $S_k$. Recall that each applicant has a characteristic $Y_k$ which tracks their choice number (i.e. whether they got their top choice, second choice, etc.) \\
 \newline
 Then, we calculate fairness by calculating the probability that an applicant in $H_k$ is matched with their top housing choice. Namely, we measure fairness by aiming to achieve:
-\[\frac{P(Y = 1 | H_i)}{P(Y = 1 | H_j)} = 1 \quad \text{ for } i \neq j\]
+\begin{equation}
+\frac{P(Y = 1 | H_i)}{P(Y = 1 | H_j)} = 1 \quad \text{ for } i \neq j\
+\end{equation}
 
 Algorithms naturally encode human biases, so having an empirical set of fairness definitions provides a testing regime for how our proposed ranking system compares to others. These definitions are a more reliable metric than simply assuming diversity implies fairness. 
 
-\subsection{Model Evaluation}
-Taking the results and discussed above, we consider how each allocation preforms overall in terms of how many people get their top choice and the average wait time. In this case we would gravitate towards priority systems which award a higher percentage of people their number one choice, as well as systems with the lowest average wait time. \\
+\subsection{Model Evaluation} \label{fairness}
+Based on the results above, we consider how each priority scheme preforms overall in terms of the proportion of people who get their top choice and the average wait time experienced by each person. In this case we would gravitate towards priority systems which award a higher percentage of people their number one choice, as well as systems with the lowest average wait time. \\
 \newline
-Using the fairness metrics discussed above, we consider the fairness of each priority system, using race as our grouping characteristic. Each fairness column is calculated by
-$$
+Next, we also consider another indicator of the fairness of each priority system using race as our grouping characteristic. Each fairness column is calculated by
+\begin{equation}
 \biggr{|}1 - \frac{1}{(n^2 - n)}\sum_i \sum_j \frac{X[i]}{X[j]}\biggr{|} \quad \text{ for } i \neq j\
-$$
-where $X$ is a vector of either average wait time or average percent of top choice, and each index of $X$ represents a different racial group. Essentially, this is an average of the ratio of group to group fairness measures for each possible group combination. Lower measures of this metric are better, as they indicate a higher degree of fairness across racial groups for percentage of top choice and average wait time. Note that values of zero are omitted when preforming this calculation.\\
+\end{equation}
+where $X$ is a vector of either average wait time or average percent of top choice, and each index of $X$ represents a different racial group. This indicator is an average of the ratio of group to group fairness measures (using wait time, and top choice respectively as above) for each possible group combination. Lower measures of this indicator are better, as they suggest a higher degree of similarity in the respective fairness measures across racial groups. Note that values of zero are omitted when preforming this calculation as they indicate that there was no match.\\
 \newline
 The results of this analysis are below:
     \begin{table}[H]
         \centering
         \begin{tabular}{c|c|c|c|c}
-             Priority &  Average \% Top Choice & Average Waittime & Top Choice Fairness & Average Waittime Fairness \\
+             Priority &  Avg. Top Choice & Avg. Wait Time (months) & Top Choice Fairness & Wait Time Fairness \\
              \hline
-             Disability & \textcolor{blue}{55.025\%} & 12.25 & 0.08651679 & \textcolor{blue}{0.06583475}\\
-             Income & 48.45375\% & 14.125 & 0.08379766 &  0.09561799\\
-             Children & 31.6875\% & \textcolor{blue}{11.875} & \textcolor{blue}{0.06552772} &  0.08832704 \\
-             Eldery & 47.10125\% & 14.75 & 0.08963984 & 0.06991156 \\
-             Veteran & 49.3775\% & 12.75 & 0.07978653 & 0.1070871 \\
+             Income & 42.2\% & 19 & 0.16695 &  0.052704\\
+             Children & 36.9\% & \textcolor{blue}{14} & 0.13707 &  0.18231 \\
+             Elderly & \textcolor{blue}{46.8\%} & 20 & 0.17730 & \textcolor{blue}{0.04520} \\
+             Veteran & 46.4\% & 18 & 0.13093 & 0.11389 \\
+             Disability & 45.7\% & 18 & \textcolor{blue}{0.12013} & 0.09436\\
         \end{tabular}
-        \caption{Overall average and fairness measures by racial group. Lowest values are indicated in blue.}
+        \caption{Overall average and fairness measures by racial group. Best values are indicated in blue. Average top choice and wait times are averages of group averages.}
         \label{tab:my_label}
     \end{table}
 \newline
@@ -549,14 +532,14 @@ The results of this analysis are below:
 
 \begin{figure}[h!]
     \includegraphics[scale=0.5]{doc/FinalReport/top_choice_fairness.png}
-    \caption{Distribution of Top Choice fairness metric (10 experiments).}
-    \label{fig:schematic}
+    \caption{Distribution of Top Choice Fairness Indicator (10 experiments).}
+    \label{fig:topchoicefairness}
 \end{figure}
 
 \begin{figure}[h!]
     \includegraphics[scale=0.5]{doc/FinalReport/waittime_fairness.png}
-    \caption{Distribution of Wait time fairness metric (10 experiments).}
-    \label{fig:schematic}
+    \caption{Distribution of Wait Time Fairness Indicator (10 experiments).}
+    \label{fig:waittimefairness}
 \end{figure}
 
 These results offer insights into the performance and fairness of each priority system:
