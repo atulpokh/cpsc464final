@@ -1,3 +1,4 @@
+,
 
 \documentclass[11pt]{article}
 \usepackage{amsmath,amssymb,amsfonts} 
@@ -141,7 +142,7 @@ Proof Sketch:~~}}
   {\qed\end{trivlist}}
 
 
-\title{\bf CPSC 464: Modeling Alternative Affordable Housing Priority Systems}
+\title{\bf CPSC 464/564: Modeling Alternative Affordable Housing Priority Systems}
 
 
 \author{Andrew West, Nicole Lam, Atul Pokharel, Urszula Solarz \\
@@ -226,11 +227,10 @@ In our project, we aim to analyze the demographic effects of tenant populations 
 \noindent
 Our city of choice to model policy changes is Baltimore beause of data vailability. With a population of close to 600,000 and a public housing system containing approximately 20,000 properties, Baltimore's robust and widely used public housing system is a suitable choice for analyzing the impacts of differing priority systems on allocation outcomes. \\
 \newline
-Demand for public housing in Baltimore is also exceedingly high. The public housing system lottery opened for the first time since 2019 in August of 2023, with nearly 30,000 applicants applying during the two week window~\cite{emily_hofstaedter_28000_nodate}. Priority systems are therefore necessary to best allocate the limited available housing to those most in need. \\
-\newline
+Demand for public housing in Baltimore is also exceedingly high. The public housing system lottery opened for the first time since 2019 in August of 2023, with nearly 30,000 applicants applying during the two week window~\cite{emily_hofstaedter_28000_nodate}. Priority systems are therefore necessary to best allocate the limited available housing to those most in need.  It is therefore important to understand the fairness properties of different allocation schemes. \\
 
 \subsection{Model Data and Privacy Considerations}
-\subsubsection{Overview}Our model will employ the 2021 American Community Survey (ACS) microdata~\cite{us_census_bureau_mdat_nodate}. The ACS is an annual survey conducted with the aim of being a nationally representative sample of demographic, economic, and housing information. We will employ demographic variables contained in the ACS data to estimate the number of households eligible for public housing. To gain the most representative demographic variables, we specifically use the 5-year estimates, which average data over a five year period. \\
+\subsubsection{Overview}Our model employs the 2021 American Community Survey (ACS) microdata~\cite{us_census_bureau_mdat_nodate}. The ACS is an annual survey conducted with the aim of being a nationally representative sample of demographic, economic, and housing information. We use demographic variables contained in the ACS data to estimate the number of households eligible for public housing. To gain the most representative demographic variables, we specifically use the 5-year estimates, which average data over a five year period. \\
 \newline
 Due to the sensitive information collected by the ACS, such as location, income, number of people in households, and so on, privacy considerations exist. Using this data, it could be possible to 'reverse engineer' the survey to gain knowledge about sensitive attributes. For instance, an adversary knowing a family's approximate location and income could use the survey to identify the household's response and gain knowledge about the disability status of the household members. \\
 \newline
@@ -238,11 +238,10 @@ The ACS has taken steps to mitigate the exposure of sensitive attributes, such a
 \newline
 Because of the existing measures taken by the ACS to preserve privacy, we do not feel that additional measures need to be taken, especially given that our model is reporting only on aggregate demographic changes as a result of different priority systems. However, in real world systems where technology is used in housing allocation, information security should be paramount. City officials should take care to ensure that individual applicant data is stored on secure servers and not susceptible to data breaches to the best of their ability. 
 \subsubsection{Data Processing}
-After downloading Baltimore City's data from the ACS website, we processed the raw file in R to yield a usable input into our model. We began by selecting only the relevant attributes specified in \autoref{3.2}. From there, we combined individuals into households by serial number and re-coded the data, disqualifying households whose total income exceeded $150\%$ of the poverty line (see Table 2). See the \href{https://github.com/atulpokh/cpsc464final/tree/main}{Github} repository for full code. \\
-\newline
-We proceed to describe our model, which allocates $M$ housing units to $N$ applicants. 
+After downloading Baltimore City's data from the ACS website, we processed the raw file in R to yield a usable input into our model.  We began by selecting only the relevant attributes specified in \autoref{3.2}. From there, we combined individuals into households by serial number and re-coded the data, disqualifying households whose total income exceeded $150\%$ of the poverty line (see Table 2). See the \href{https://github.com/atulpokh/cpsc464final/tree/main}{Github} repository for the code.
+We next describe our model, which allocates $M$ housing units to $N$ applicants. 
 \subsection{Housing Development Attributes}
-Let $M$ be the number of different types of housing units. By the Housing Authority of Baltimore City, public housing authorities manage a little over $M = $ 20,000 units. Each housing unit $m$ is associated with a capacity (number of people who can live in the housing unit). Furthermore, we introduce another parameter $v$ that which represents the general vacancy rate (i.e. how many families leave their affordable housing units per period). \\
+Let $M$ be the number of different types of housing units. By the Housing Authority of Baltimore City, public housing authorities manage  $M = 20,513$ units. Each housing unit $m$ is associated with a capacity (number of people who can live in the housing unit). Furthermore, we introduce another parameter $v$ that represents the general vacancy rate (i.e. how many affordable housing units become vacant per period). A period corresponds to one month.\\
 \newline
 Given this list of $M$ housing units, we also want to determine the number of each unique housing type (in terms of size). Namely, we categorize this list of housing units by their capacity $c$. Let us denote the vector of different types of housing by $\mathcal{M}_u$, where each entry of $\mathcal{M}_u$ represents the number of units for each type of house (number of 1 bedrooms, 2 bedrooms, etc.). \\
 \newline
@@ -261,8 +260,8 @@ For a total of $20513$ units.
 \label{3.2}
 Let $N$ be the number of applicants to the housing system. Each applicant $1 \leq i \leq N$ has two vectors associated with it: 
 \begin{itemize}
-    \item A characteristic vector of length $k = 8$, which represents the $k$ different characteristics (family size, income, race, ethnicity, number of children, number of elderly members, veteran status, disability). We take these attributes from the 2021 5 year ACS survey, filtering by respondents from Baltimore City.
-    \begin{itemize}
+    \item A characteristic vector of length $k = 8$, which represents the $k$ different characteristics (family size, income, race, ethnicity, number of children, number of elderly members, veteran status, disability). We take these attributes from the 2021 five-year ACS survey, filtering by respondents from Baltimore City.
+    \begin{enumerate}
         \item Family size 
         \item Income
         \item Race of head of household - categorized by (1) White Alone, (2) Black or African American alone, (3) American Indian alone, (4) Alaska Native alone, (5) American Indian and Alaska Native tribes specified, (6) Asian alone, (7) Native Hawaiian and Other Pacific Islander alone, (8) Some Other Race alone, (9) Two or More Races
@@ -271,16 +270,14 @@ Let $N$ be the number of applicants to the housing system. Each applicant $1 \le
         \item Number of elderly over 65
         \item Veteran status of any household members - 1 (True) or 0 (False)
         \item Disability status of any household members - 1 or 0
-    \end{itemize}
+    \end{enumerate}
     Furthermore, in this characteristics table, we add an additional two parameters which we will utilize letter to calculate fairness:
-    \begin{itemize}
+    \begin{enumerate}
         \item Wait time - number of periods until the applicant is matched with some housing
         \item Choice number - the ranking of the matched housing unit (i.e. top choice is 1, second choice is 2, ...)
-    \end{itemize}
-    \item A preference vector $\mathcal{P}_i$ of length $|\mathcal{M}_u|$ that ranks each applicants' preference for each type of housing unit. Recall that each type of housing unit has some capacity $c$. Let us denote the family size of applicant $i$ by $s_i$. \\
-    \newline
-    We model preferences using the following assumptions: assume that the top preference for every applicant is the housing unit with capacity $s_i$. The following preferences differ by the family size of the applicant, but never exceed $s_i \pm 2$. Thus, every preference vector $\mathcal{P}_i$ will have an ordering of $p \leq 4$ preferences, and the remaining $|\mathcal{M}_u| - p$ entries will be 0. We approximate the housing unit preferences for each applicant (organized by family size) via Table 1.
-    \begin{table}[]
+    \end{enumerate}
+    \item A preference vector $\mathcal{P}_i$ of length $|\mathcal{M}_u|$ that ranks each applicants' preference for each type of housing unit. Recall that each type of housing unit has some capacity $c$. Let us denote the family size of applicant $i$ by $s_i$. We assign preferences using the following assumptions: assume that the top preference for every applicant is the housing unit with capacity $s_i$. The following preferences differ by the family size of the applicant, but never exceed $s_i \pm 2$. Thus, every preference vector $\mathcal{P}_i$ will have an ordering of $p \leq 4$ preferences, and the remaining $|\mathcal{M}_u| - p$ entries will be 0. We list the resulting housing unit preferences for each applicant (organized by family size) in Table 1.
+    \begin{table}[h!]
         \centering
         \begin{tabular}{c|c|c}
              \text{Family Size} &  Choice 1 & Remaining Choices (in any order)\\
@@ -292,19 +289,18 @@ Let $N$ be the number of applicants to the housing system. Each applicant $1 \le
              5 & 5 bedroom & 4, 6+ bedroom \\
              6+ & 6+ bedroom & 5 bedroom
         \end{tabular}
-        \caption{Housing Preferences by Family Size}
+        \caption{Housing Preferences by Family Size. These are synthetically generated using reasonable assumptions.}
         \label{tab:my_label}
     \end{table}
 \end{itemize} 
 \subsection{Housing Allocation Priority Systems}
-We consider a variety of possible priority systems, drawing examples from major cities like Cambridge and New York. It's important to note that the list of systems we study is non-exhaustive, rather, it is meant to serve as a baseline approach that could be built upon in real world contexts. The priority systems we consider are as follows:
+We consider five possible priority systems, drawing examples from major cities like Cambridge and New York. It's important to note that the list of systems we study is non-exhaustive, rather, it is meant to serve as a baseline approach that could be built upon in real world contexts. The priority systems we consider are as follows:
 \begin{enumerate}
     \item \textbf{Priority for households with a member who is disabled.} This priority system recognizes the additional challenges that households with disabled members may face. Allocating resources or benefits to such households ensures a more inclusive and equitable approach, acknowledging the unique needs and support requirements for disabled individuals.
     \item \textbf{Priority for households with a member who is a veteran.} Veterans often face distinct challenges upon returning to civilian life, such as reintegration into the workforce and potential physical or mental health issues. Prioritizing veteran households acknowledges their service to the nation and aims to provide support as they transition back into civilian life.
     \item \textbf{Priority for households with children, ordering those with the most children first.} Children represent the future of society, and supporting households with more children can be seen as an investment in the next generation. This priority system aims to address the financial and logistical challenges that larger families may encounter, ensuring the well-being of children and promoting family stability.
     \item \textbf{Priority for households with elderly members, ordering those with the most first.} Aging populations often require additional care and support. Prioritizing households with more elderly members recognizes the increased potential for health-related needs and aims to enhance the quality of life for older individuals. This approach aligns with a societal commitment to respect and care for the elderly.
     \item \textbf{Priority for households with the lowest income, ordering those households first.} Socioeconomic disparities can significantly impact individuals and families. Prioritizing households with the lowest income addresses the immediate needs of those facing financial hardship. This system aims to reduce inequality and provide essential resources to those who may be most vulnerable in society.
-
 \end{enumerate}
 \subsection{Housing Allocation Algorithm}
 Consider the following $N$ by $M$ matrix. 
@@ -324,16 +320,16 @@ Consider the following $N$ by $M$ matrix.
 \end{bmatrix}\]
 where $p_{i,j}$ represents the preference ranking for applicant $i$ on housing development $j$. \\
 \newline
-We introduce two other parameters:
-\begin{itemize}
-    \item Applicant departure rate $\delta$: at the beginning of each period, we remove $\delta \cdot \texttt{len}(H)$ applicants from the matrix at random. Assume that $\delta$ is constant every period.
-    \item Applicant arrival rate $\alpha$: next, we create $X_\alpha \cdot \texttt{len}(H)$ new applicants to add to matrix $H$, where $X_\alpha \sim Poisson(\alpha)$
-\end{itemize}
+% We introduce two other parameters:
+% \begin{itemize}
+%    \item Applicant departure rate $\delta$: at the beginning of each period, we remove $\delta \cdot \texttt{len}(H)$ applicants from the matrix at random. Assume that $\delta$ is constant every period.
+%    \item Applicant arrival rate $\alpha$: next, we create $X_\alpha \cdot \texttt{len}(H)$ new applicants to add to matrix $H$, where $X_\alpha \sim Poisson(\alpha)$
+%\end{itemize}
 \subsubsection{Data Set-Up}
 \begin{enumerate}
-    \item We are given $N$ applicants
+    \item Start with $N$ applicants
     \item Generate a $N \times M$ matrix populated with their preference vectors
-    \item Eliminate ineligible applicants based on median income. Applicants with household income $150\%$ of the poverty line or below are eligible:
+    \item Eliminate ineligible applicants based on median income. Applicants with household income $150\%$ of the poverty line or below are eligible.
     \begin{table}[htp]
         \centering
         \begin{tabular}{c|c|c}
@@ -357,7 +353,8 @@ We introduce two other parameters:
 \subsubsection{Initial Data Filtering}
 Suppose we are allocating housing by some particularly priority system. For our example, we will use disability.\\
 \begin{enumerate}
-    \item Create dictionary of housing units available according to \autoref{3.1}.
+    \item Create dictionary of housing units available according to \autoref{3.2}.
+    \item We assume that for each housing type, 1 in every 25 housing units is available in the first period.
     \item Remove ineligible applicants (those with median income above $150\%$ of the poverty line)
     \item Move all applicants with characteristic \[\texttt{disability[i] = True}\]
     to the top of the matrix.
@@ -369,11 +366,10 @@ For each period:
     \item Apply housing vacancy rate $v$, in other words randomly add
     \[X_v \cdot |M|\]
     different types of housing units.
-    where $X_v \sim Poisson(v)$.
-    \item Apply applicant departure rate $\delta$. Randomly select $\delta \cdot \texttt{len}(H)$ rows to remove
-    \item Apply applicant arrival rate $\alpha$: create $\alpha \cdot \texttt{len}(H)$ new rows and fill with preferences following the same rules described in section 2.
-    \item Examine the first row of the matrix
-    \item Let us examine the set of plausible housing matches:
+    where $X_v \sim Uniform(v)$.
+   % \item Apply applicant departure rate $\delta$. Randomly select $\delta \cdot \texttt{len}(H)$ rows to remove
+    % \item Apply applicant arrival rate $\alpha$: create $\alpha \cdot \texttt{len}(H)$ new rows and fill with preferences following the same rules described in section 2.
+    \item Examine the first row of the matrix and the set of plausible housing matches:
     \[J = \{j \mid p_{i,j} > 0\}\]
     \item Choose the column index $j^*$ that that has $p_{i,j^*} = 1$ in $\mathcal{P}_i$. (i.e. choose their top choice of housing)
     \item Examine whether top choice is available (whether the particular housing unit of size $s_i$ is available):
@@ -386,11 +382,14 @@ For each period:
     \item Proceed to the next period. 
     \item Repeat all steps until matrix $H$ is empty or we have run $10^6$ iterations.
 \end{enumerate}
-Broadly, this process can be visually represented by the image below:
-\begin{center}
-    \includegraphics[scale=0.44]{doc/Setup Image.png}
-\end{center}
-With steps:
+Broadly, this process is illustrated in Figure~\ref{fig:schematic}.
+\begin{figure}[h!]
+    \includegraphics[scale=0.65]{doc/Setup Image.png}
+    \caption{Visual representation of the main steps of our matching algorithm.}
+    \label{fig:schematic}
+\end{figure}
+\newline
+The steps of the matching algorithm illustrated in Figure~\ref{fig:schematic} are as follows:
 \begin{enumerate}
     \item $N$ applicants with characteristic vectors of size $k$ and some preferences (indicated in section 3.2) apply for housing through the government. 
     \item Ineligible applicants are disqualified, while eligible applicants are ordered. Order waitlist based on some priority system.
@@ -400,7 +399,7 @@ With steps:
 \caption{Main Algorithm}
 \SetKwInOut{Input}{Input}
 \SetKwInOut{Output}{Output}
-\Input{Dataframe $df$, Housing units $housing\_units$, Priorities $priorities$}
+\Input{Dataframe $df$, Initial available units $original\_housing\_stock$, Priorities $priorities$}
 \Output{New Dataframe $df$ with rankings} 
 \ForEach{$priority$ \textbf{in} $priorities$}{
     $df \leftarrow$ original dataframe\;
@@ -410,13 +409,13 @@ With steps:
     }{
         $waitlist \leftarrow$ sort from high to low (number of children, elderly)
     }
-    $period \leftarrow 1e6$\;
+    $period \leftarrow 12 \cdot 5$ (5 years, 12 months)\;
     \newline
     \For{$\_$ \textbf{in} \text{{range}}(period)}{
         \If{$\text{{waitlist.shape}}[0] = 0$ (waitlist is empty)}{
             \text{{break}}\;
         }
-        $housing\_units \leftarrow \text{{housing\_vacancy}}(housing\_units)$\;
+        $housing\_units \leftarrow \text{{housing\_vacancy}}(original\_housing\_stock)$\;
         \newline
         \ForEach{$\_, \text{{applicant}}$ \textbf{in} $waitlist.\text{{iterrows}}()$}{
             \newline
@@ -438,25 +437,31 @@ With steps:
     Save statistics and dataframe \;
 }
 \end{algorithm}
-\newpage
+
 \section{Empirical results}
-Running our algorithm in Python on the cleaned Baltimore data, we get resulting wait times and probability of top choice for each household. We aggregate these data by racial group and visualize the these metrics for each priority system. \\
-\newline
-For each trial of the algorithm, we get a set of measures of fairness across groups. Below is an example of fairness measures for one such trial. In these figures, blue bars represent the probability of top choice and red lines represent the average wait time to be housed in periods.
+An experiment is a fixed number of periods  of the matching algorithm on a fixed housing and applicant dataset.  All of our experiments consist of 60 periods, interpreted as one matching between the waitlist and vacant units every month for five years. Therefore, a single experiment simulates the matching outcomes of our matching algorithm on Baltimore housing and applicant data over a period of five years.
+
+Each experiment produces the following metrics:
+\begin{enumerate}
+\item Average waittime for each racial group (8 groups) for each priority system (5 systems) 
+\item Percentage of people in each group (8 groups) that get their first choice
+\item Wait time fairness of the process (1 measurement). See below.
+\item Top Choice fairness of the process (1 measurement). See below.
+\end{enumerate}
+
+Therefore, running our algorithm in Python  we get resulting wait times and probability of top choice for each household. We group these data by racial group and visualize the these metrics for each priority system.   In these figures, blue bars represent the probability of top choice and red lines represent the average wait time to be housed in periods.
         \begin{table}[h]
             \centering
-                \caption{Table of Percentage of Top Choice vs. Average Wait Time for Each Race Group \\
+                \caption{ Percentage of Top Choice (blue) vs. Average Wait Time (red) for Each Race Group \\
                 (Order by priority system: children, disability, elderly, low to high income, veteran status)}
                 \vspace{1.1em}
                 \begin{tabular}{cc}
-                    \includegraphics[width=0.33\linewidth]{Children.png}
+                  \includegraphics[width=0.33\linewidth]{Children.png}
                     & \includegraphics[width=0.33\linewidth]{Disability.png} \\[-4pt]
                     \includegraphics[width=0.33\linewidth]{Elderly.png} & \includegraphics[width=0.33\linewidth]{Income.png} 
                 \end{tabular}%
         \end{table}
 \[\includegraphics[width=0.33\linewidth]{Veteran.png}\]
-Running the simulation 
-
 
  \begin{table}[h]
             \centering
@@ -471,7 +476,19 @@ Running the simulation
         \end{table}
 \[\includegraphics[width=0.5\linewidth]{tcp5.png}\]
 
-\section{(Desired) Theoretical results}
+\begin{table}[h]
+            \centering
+                \caption{Distribution of average wait time by racial group and priority (10 experiments)\\
+                (Order by priority system: children, disability, elderly, low to high income, veteran status)}
+                \vspace{1.1em}
+                \begin{tabular}{cc}
+                    \includegraphics[width=0.5\linewidth]{doc/FinalReport/wp1.png}
+                    & \includegraphics[width=0.5\linewidth]{doc/FinalReport/wp2.png} \\[-4pt]
+                    \includegraphics[width=0.5\linewidth]{doc/FinalReport/wp3.png} & \includegraphics[width=0.5\linewidth]{doc/FinalReport/wp4.png} 
+                \end{tabular}%
+        \end{table}
+\[\includegraphics[width=0.5\linewidth]{wp5.png}\]
+\section{Theoretical considerations}
 
 \subsection{Measurement of Fairness}
 
@@ -528,6 +545,20 @@ The results of this analysis are below:
         \label{tab:my_label}
     \end{table}
 \newline
+
+
+\begin{figure}[h!]
+    \includegraphics[scale=0.5]{doc/FinalReport/top_choice_fairness.png}
+    \caption{Distribution of Top Choice fairness metric (10 experiments).}
+    \label{fig:schematic}
+\end{figure}
+
+\begin{figure}[h!]
+    \includegraphics[scale=0.5]{doc/FinalReport/waittime_fairness.png}
+    \caption{Distribution of Wait time fairness metric (10 experiments).}
+    \label{fig:schematic}
+\end{figure}
+
 These results offer insights into the performance and fairness of each priority system:
 \begin{itemize}
     \item Disability Priority: This system achieves an impressive average percentage of top choice ({55.025\%}), coupled with a relatively low average wait time of 12.25. The fairness measures for both top choice and average wait time, indicated in blue ({0.08651679} and {0.06583475} respectively), suggest a commendable level of equity among racial groups.
