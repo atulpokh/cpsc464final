@@ -1,5 +1,0 @@
- I'm attaching a .zip file with the code I could find for this project. It should be complete, but not up to the reproducibility standards you'd expect from a published paper. Hopefully the logic is clear though.
-
-To orient you a little: the STATA .do files process the ACS and PIC data and generate the descriptive statistics in the paper. The MATLAB .m files are for estimation and counterfactuals. Most of the files are only relevant for estimation, but some of the functions are used for both estimation and counterfactuals. counterfactuals.m is the first file I would look at if you want to understand the counterfactual simulations, and estimation_wrapper.m runs through the entire estimation routine.
-
-Good luck and feel free to reach out if you have specific questions about the code or methods.
